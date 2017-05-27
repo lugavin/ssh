@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//hibernate.org//DTD Mapper 1.0//EN"
+        "http://hibernate.org/dtd/mapper-1.0.dtd">
+
+<mapper namespace="com.ssh.sys.core.repository.PermissionRepository">
+
+    <sql id="getPermissionById">
+        <![CDATA[
+          SELECT a.id AS id,
+                 a.parent_id AS parentId,
+                 a.parent_ids AS parentIds,
+                 a.name AS name,
+                 a.type AS type,
+                 a.url AS url,
+                 a.code AS code,
+                 a.status AS status,
+                 a.seq AS seq,
+                 a.icon AS icon,
+                 b.name AS parentName
+            FROM SYS_PERMISSION a LEFT JOIN SYS_PERMISSION b
+              ON a.parent_id = b.id
+           WHERE a.id = :permissionId
+		]]>
+    </sql>
+
+    <sql id="getListSelective">
+        <![CDATA[
+          SELECT a.id AS id,
+                 a.parent_id AS parentId,
+                 a.parent_ids AS parentIds,
+                 a.name AS name,
+                 a.type AS type,
+                 a.url AS url,
+                 a.code AS code,
+                 a.status AS status,
+                 a.seq AS seq,
+                 a.icon AS icon,
+                 b.name AS parentName
+            FROM SYS_PERMISSION a LEFT JOIN SYS_PERMISSION b
+              ON a.parent_id = b.id
+            <@where>
+                <#if parentId?? && (parentId?string)!=''>
+                 AND a.parent_id = :parentId
+                </#if>
+            </@where>
+           ORDER BY a.seq ASC
+		]]>
+    </sql>
+
+    <sql id="getMenuListByUserId">
+        <![CDATA[
+          SELECT id AS id,
+                 parent_id AS parentId,
+                 name AS name,
+                 type AS type,
+                 url AS url,
+                 code AS code,
+                 status AS status,
+                 seq AS seq,
+                 icon AS icon
+            FROM SYS_PERMISSION
+           WHERE type = 'MENU'
+             AND id IN (
+                 SELECT permission_id
+                   FROM SYS_PERMISSION_ROLE
+                  WHERE role_id IN (
+                        SELECT role_id
+                          FROM SYS_USER_ROLE
+                         WHERE user_id = :userId
+                 )
+             )
+		]]>
+    </sql>
+
+    <sql id="getFunctionListByUserId">
+        <![CDATA[
+          SELECT id AS id,
+                 parent_id AS parentId,
+                 name AS name,
+                 type AS type,
+                 url AS url,
+                 code AS code,
+                 status AS status,
+                 seq AS seq,
+                 icon AS icon
+            FROM SYS_PERMISSION
+           WHERE type = 'FUNC'
+             AND id IN (
+                 SELECT permission_id
+                   FROM SYS_PERMISSION_ROLE
+                  WHERE role_id IN (
+                        SELECT role_id
+                          FROM SYS_USER_ROLE
+                         WHERE user_id = :userId
+                 )
+             )
+		]]>
+    </sql>
+
+    <hql id="getListByPermissionIds">
+        <![CDATA[ FROM PermissionEntity WHERE id IN (:permissionIds) ]]>
+    </hql>
+
+</mapper>

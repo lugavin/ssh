@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//hibernate.org//DTD Mapper 1.0//EN"
+        "http://hibernate.org/dtd/mapper-1.0.dtd">
+
+<mapper namespace="com.ssh.sys.core.repository.Select2Repository">
+
+    <sql id="getActorListSelective">
+        <![CDATA[
+            SELECT id AS id,
+                   name AS text,
+                   status AS status
+              FROM SYS_USER
+              <@where>
+                  <#if keyword?? && (keyword?string)!=''>
+                   AND (
+                     CONCAT(id,'') = :keyword OR
+                     code LIKE CONCAT('%',:keyword,'%') OR
+                     name LIKE CONCAT('%',:keyword,'%')
+                   )
+                  </#if>
+              </@where>
+		]]>
+    </sql>
+
+    <sql id="getFuncListSelective">
+        <![CDATA[
+            SELECT id AS id,
+                   name AS text
+              FROM SYS_PERMISSION
+             WHERE type = 'FUNC'
+               AND status = 1
+              <#if keyword?? && (keyword?string)!=''>
+               AND name LIKE CONCAT('%',:keyword,'%')
+              </#if>
+		]]>
+    </sql>
+
+    <sql id="getRoleListSelective">
+        <![CDATA[
+            SELECT id AS id,
+                   name AS text
+              FROM sys_role
+             WHERE status = 1
+              <#if keyword?? && (keyword?string)!=''>
+               AND name LIKE CONCAT('%',:keyword,'%')
+              </#if>
+		]]>
+    </sql>
+
+</mapper>

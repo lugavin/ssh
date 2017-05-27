@@ -1,0 +1,15 @@
+<!--
+<!DOCTYPE mapper PUBLIC
+    "-//hibernate.org//DTD Mapper 1.0//EN"
+    "http://hibernate.org/dtd/mapper-1.0.dtd">
+-->
+<!ELEMENT mapper ((hql|sql)*)>
+<!ATTLIST mapper namespace CDATA #REQUIRED>
+
+<!-- The hql element declares a named Hibernate query string -->
+<!ELEMENT hql (#PCDATA)>
+<!ATTLIST hql id ID #REQUIRED>
+
+<!-- The sql element declares a named SQL query string -->
+<!ELEMENT sql (#PCDATA)>
+<!ATTLIST sql id ID #REQUIRED>

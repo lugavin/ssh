@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//hibernate.org//DTD Mapper 1.0//EN"
+        "http://hibernate.org/dtd/mapper-1.0.dtd">
+
+<mapper namespace="com.ssh.sys.core.repository.AuditLogRepository">
+
+    <sql id="getListSelective">
+        <![CDATA[
+            SELECT id AS auditLogId,
+                   func_code AS funcCode,
+                   actor_id AS actorId,
+                   action_time AS actionTime,
+                   host_ip AS hostIP,
+                   host_name AS hostName,
+                   request_url AS requestURL,
+                   remark AS remark
+              FROM sys_audit_log
+              <@where>
+                  <#if funcCode?? && funcCode!=''>
+                   AND func_code = :funcCode
+                  </#if>
+                  <#if actorId?? && (actorId?string)!=''>
+                   AND actor_id = :actorId
+                  </#if>
+                  <#if actionStartTime?? && (actionStartTime?string)!=''>
+                   AND DATE(action_time) >= :actionStartTime
+                  </#if>
+                  <#if actionEndTime?? && (actionEndTime?string)!=''>
+                   AND DATE(action_time) <= :actionEndTime
+                  </#if>
+              </@where>
+              ORDER BY id DESC
+		]]>
+    </sql>
+
+    <sql id="getDetailListAuditLogId">
+        <![CDATA[
+            SELECT a.id AS auditDetailId,
+                   a.row_id AS rowId,
+                   a.action AS action,
+                   a.entity_name AS entityName,
+                   a.table_name AS tableName,
+                   b.property_name AS propertyName,
+                   b.column_name AS columnName,
+                   b.before_value AS beforeValue,
+                   b.after_value AS afterValue
+              FROM sys_audit_table a
+              JOIN sys_audit_column b
+                ON a.id = b.audit_table_id
+             WHERE a.audit_log_id = :auditLogId
+		]]>
+    </sql>
+
+</mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+    http://docs.spring.io/spring-framework/docs/2.5.x/api/org/springframework/ui/freemarker/FreeMarkerConfigurationFactoryBean.html
+    对于一个FactoryBean接口实现类定义的bean其实Spring将实例化两个Bean, 一个是FactoryBean本身对应的bean, 另一个是FactoryBean产生的对象对应的bean.
+    所以当我们通过注解方式注入一个FactoryBean实例对应的bean时，既可以把它当做一个FactoryBean进行注入, 也可以把它当做FactoryBean产生的实例进行注入.
+    -->
+    <bean id="freemarkerConfiguration" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
+        <property name="configLocation" value="classpath:freemarker.properties"/>
+        <!--<property name="postTemplateLoaders" ref="multiTemplateLoader"/>-->
+        <property name="preferFileSystemAccess" value="false"/>
+        <property name="templateLoaderPaths">
+            <list>
+                <!--<value>classpath:/META-INF/freemarker/</value>-->
+                <value>/WEB-INF/freemarker/</value>
+            </list>
+        </property>
+    </bean>
+
+</beans>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//hibernate.org//DTD Mapper 1.0//EN"
+        "http://hibernate.org/dtd/mapper-1.0.dtd">
+
+<mapper namespace="com.ssh.sys.core.repository.RoleRepository">
+
+    <sql id="getRoleById">
+        <![CDATA[
+            SELECT id AS id,
+                   name AS name,
+                   remark AS remark,
+                   status AS status
+              FROM sys_role
+             WHERE id = :roleId
+		]]>
+    </sql>
+
+    <sql id="getRoleListSelective">
+        <![CDATA[
+            SELECT id AS id,
+                   name AS name,
+                   remark AS remark,
+                   status AS status
+              FROM sys_role
+              <@where>
+                  <#if name?? && name!=''>
+                   AND name LIKE CONCAT('%',:name,'%')
+                  </#if>
+                  <#if status?? && (status?string)!=''>
+                   AND status = :status
+                  </#if>
+              </@where>
+		]]>
+    </sql>
+
+    <sql id="getRoleListByUserId">
+        <![CDATA[
+            SELECT a.id AS id,
+                   a.name AS name,
+                   a.remark AS remark,
+                   a.status AS status
+              FROM sys_role a
+              JOIN sys_user_role b
+                ON a.id = b.role_id
+             WHERE b.user_id = :userId
+		]]>
+    </sql>
+
+    <sql id="getPermissionIds">
+        <![CDATA[
+            SELECT permission_id
+              FROM sys_permission_role
+             WHERE role_id = :roleId
+		]]>
+    </sql>
+
+    <hql id="getRoleListByRoleIds">
+        <![CDATA[ FROM RoleEntity WHERE id IN (:roleIds) ]]>
+    </hql>
+
+</mapper>

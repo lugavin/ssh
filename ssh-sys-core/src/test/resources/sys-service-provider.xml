@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+	    http://code.alibabatech.com/schema/dubbo
+	    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!--<import resource="classpath:spring-validation.xml"/>-->
+    <import resource="classpath:spring-core-context.xml"/>
+    <import resource="classpath:sys-core-context.xml"/>
+
+    <!-- 声明需要暴露的服务接口 -->
+    <dubbo:service interface="com.ssh.sys.api.service.AuditService" ref="auditService" validation="true"/>
+    <dubbo:service interface="com.ssh.sys.api.service.UserService" ref="userService" validation="true"/>
+    <dubbo:service interface="com.ssh.sys.api.service.RoleService" ref="roleService" validation="true"/>
+    <dubbo:service interface="com.ssh.sys.api.service.PermissionService" ref="permissionService" validation="true"/>
+    <dubbo:service interface="com.ssh.sys.api.service.Select2Service" ref="select2Service" validation="false"/>
+
+</beans>

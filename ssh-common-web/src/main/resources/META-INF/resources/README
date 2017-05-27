@@ -1,0 +1,3 @@
+注意:
+(1)JAR文件的 META-INF/resources 目录相当于 JavaEE 工程中的Web根目录;
+(2)Web根目录里的文件会覆盖JAR文件中的同名文件.

@@ -1,0 +1,32 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <groupId>com.ssh</groupId>
+        <artifactId>ssh-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../ssh-parent</relativePath>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>ssh-sys-parent</artifactId>
+    <packaging>pom</packaging>
+
+    <name>${project.artifactId}</name>
+    <url>http://maven.apache.org</url>
+
+    <!--
+        parent
+          |-api  : 接口层(通常我们会把提供者的服务接口单独作为一个模块，其中包含了接口、DTO、业务异常，该模块通常不要依赖第三方框架，当然Validate API除外，模块会给消费者依赖)
+          |-core : 业务逻辑层(负责核心业务逻辑的实现以及完成数据持久化操作)
+          |-web  : 表现层(负责数据的展现但不涉及业务逻辑)
+    -->
+    <modules>
+        <module>../ssh-sys-api</module>
+        <module>../ssh-sys-core</module>
+        <module>../ssh-sys-web</module>
+    </modules>
+
+</project>

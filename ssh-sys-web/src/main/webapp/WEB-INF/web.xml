@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    metadata-complete: 指定当前的部署描述文件是否是完全的.
+    false: 如果不配置该属性或将其设置为false则表示表示启用注解支持(和可插拔性支持)
+    true: 容器在部署时将只依赖web.xml而忽略所有的注解(同时也会跳过web-fragment.xml的扫描即禁用可插拔性支持)
+-->
+<web-app version="3.0" metadata-complete="false"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+         http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+    <display-name>SSH Shiro Bootstrap Project</display-name>
+    <description>Web Framework</description>
+
+</web-app>

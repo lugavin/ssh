@@ -1,0 +1,201 @@
+.tree-menu * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.tree-menu > ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.tree-menu > ul a {
+    color: #337ab7;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.tree-menu > ul a:before,
+.tree-menu > ul a:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.tree-menu > ul a:hover {
+    color: #23527c;
+    text-decoration: underline;
+}
+
+.tree-menu > ul a:focus {
+    color: #23527c;
+    text-decoration: underline;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+}
+
+.tree-menu > ul > li {
+    position: relative;
+    display: block;
+    border-bottom: 1px solid #eaecf0;
+    font-size: 15px;
+}
+
+.tree-menu > ul > li > a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}
+
+.tree-menu > ul > li > a:hover,
+.tree-menu > ul > li > a:focus {
+    text-decoration: none;
+    background-color: #eee;
+}
+
+/* 点击<a>标签后修改其样式 */
+.tree-menu > ul > li > a:hover,
+.tree-menu > ul > li > a:focus {
+    color: #259dab;
+    background-color: #e7e7e7;
+}
+
+.tree-menu > ul > li.active > a {
+    color: #fff;
+    background-color: #259dab;
+    background-image: -webkit-linear-gradient(left, #259dab 0%, #2574ab 100%);
+    background-image: -o-linear-gradient(left, #259dab 0%, #2574ab 100%);
+    background-image: linear-gradient(to right, #259dab 0%, #2574ab 100%);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff259dab', endColorstr='#ff2574ab', GradientType=1);
+}
+
+/* 列表样式 */
+.tree-menu > ul > li ul {
+    list-style: none;
+    display: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    border-top: 1px solid #eaecf0;
+    background-color: #f6f7f8;
+}
+
+/* 展示隐藏菜单 */
+.tree-menu > ul > li.active > ul {
+    /*display: block;*/
+    border-top: none;
+}
+
+/* 下拉菜单三角效果 */
+.tree-menu > ul > li.active > ul:before {
+    border-top: 7px solid #259dab;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    content: "";
+    display: inline-block;
+    position: absolute;
+    left: 15px;
+    top: 0;
+}
+
+.tree-menu > ul > li ul > li {
+    margin-left: 21px;
+    border-left: 1px solid #dbdfe6;
+    display: block;
+    font-size: 14px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.tree-menu > ul > li ul > li:not(:first-child) {
+    border-top: 1px solid #eaecf0;
+}
+
+.tree-menu > ul > li ul > li > a {
+    display: block;
+    font-weight: 400;
+    padding: 5px 0 5px 18px;
+    color: #657390;
+    position: relative;
+    height: 28px;
+    -webkit-transition: all 0.2s ease-out 0s;
+    -o-transition: all 0.2s ease-out 0s;
+    transition: all 0.2s ease-out 0s;
+}
+
+/*实心圆点*/
+.tree-menu > ul > li ul > li > a:before {
+    content: '';
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    left: -3px;
+    top: 50%;
+    background-color: #9fa8bc;
+    margin-top: -3px;
+    border-radius: 50px;
+    -webkit-transition: all 0.2s ease-out 0s;
+    -o-transition: all 0.2s ease-out 0s;
+    transition: all 0.2s ease-out 0s;
+}
+
+/*空心圆圈*/
+.tree-menu > ul > li ul > li > a:after {
+    content: '';
+    width: 30px;
+    height: 30px;
+    border: 1px solid #a0a8b9;
+    position: absolute;
+    left: -15px;
+    top: 50%;
+    margin-top: -15px;
+    border-radius: 50px;
+    opacity: 0;
+    -webkit-transition: all 0.2s ease-out 0s;
+    -o-transition: all 0.2s ease-out 0s;
+    transition: all 0.2s ease-out 0s;
+}
+
+.tree-menu > ul > li ul > li > a:hover,
+.tree-menu > ul > li ul > li > a:focus,
+.tree-menu > ul > li ul > li > a:active {
+    text-decoration: none;
+    color: #464f63;
+}
+
+.tree-menu > ul > li ul > li > a:hover:before,
+.tree-menu > ul > li ul > li > a:focus:before,
+.tree-menu > ul > li ul > li > a:active:before {
+    background-color: #657390;
+}
+
+.tree-menu > ul > li ul > li > a:hover:after,
+.tree-menu > ul > li ul > li > a:focus:after,
+.tree-menu > ul > li ul > li > a:active:after {
+    opacity: 1;
+    border-color: #657390;
+    width: 11px;
+    height: 11px;
+    left: -6px;
+    margin-top: -6px;
+}
+
+.tree-menu > ul > li ul > li.active > a {
+    color: #259dab;
+}
+
+.tree-menu > ul > li ul > li.active > a:before {
+    background-color: #259dab;
+}
+
+.tree-menu > ul > li ul > li.active > a:after {
+    opacity: 1;
+    border-color: #259dab;
+    width: 11px;
+    height: 11px;
+    left: -6px;
+    margin-top: -6px;
+}

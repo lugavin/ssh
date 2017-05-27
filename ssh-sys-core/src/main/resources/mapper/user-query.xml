@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//hibernate.org//DTD Mapper 1.0//EN"
+        "http://hibernate.org/dtd/mapper-1.0.dtd">
+
+<mapper namespace="com.ssh.sys.core.repository.UserRepository">
+
+    <sql id="getUserByCode">
+        <![CDATA[
+            SELECT id AS id,
+                   code AS code,
+                   name AS name,
+                   pass AS pass,
+                   salt AS salt,
+                   status AS status
+              FROM sys_user
+             WHERE code = :code
+        ]]>
+    </sql>
+
+    <sql id="getUserListSelective">
+        <![CDATA[
+            SELECT id AS id,
+                   code AS code,
+                   name AS name,
+                   pass AS pass,
+                   salt AS salt,
+                   status AS status
+              FROM sys_user
+              <@where>
+                  <#if code?? && code!=''>
+                   AND code = :code
+                  </#if>
+                  <#if name?? && name!=''>
+                   AND name LIKE CONCAT('%',:name,'%')
+                  </#if>
+              </@where>
+		]]>
+    </sql>
+
+    <hql id="getListByUserIds">
+        <![CDATA[ FROM UserEntity WHERE id IN (:userIds) ]]>
+    </hql>
+
+</mapper>

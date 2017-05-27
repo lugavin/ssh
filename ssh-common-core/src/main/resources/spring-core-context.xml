@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <context:component-scan base-package="com.ssh.common.core"/>
+
+    <!--
+    <a href="https://docs.spring.io/spring-data/jpa/docs/1.6.0.RELEASE/reference/html/jpa.repositories.html">JPA</a>
+    -->
+    <!--
+    <jpa:repositories entity-manager-factory-ref="entityManagerFactory"
+                      transaction-manager-ref="transactionManager"
+                      base-package="com.ssh.*.core.repository"
+                      repository-impl-postfix="Impl"/>
+    -->
+
+    <import resource="classpath:spring-datasource.xml"/>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="persistenceProvider">
+            <bean class="org.hibernate.ejb.HibernatePersistence"/>
+        </property>
+        <property name="persistenceUnitName" value="default"/>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.use_sql_comments">false</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="javax.persistence.validation.mode">none</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.dynamic-insert">true</prop>
+                <prop key="hibernate.dynamic-update">true</prop>
+                <!--<prop key="hibernate.connection.autocommit">false</prop>-->
+                <prop key="hibernate.query.substitutions">true 1, false 0</prop>
+                <prop key="hibernate.default_batch_fetch_size">16</prop>
+                <prop key="hibernate.max_fetch_depth">2</prop>
+                <prop key="hibernate.generate_statistics">true</prop>
+                <prop key="hibernate.bytecode.use_reflection_optimizer">true</prop>
+                <prop key="hibernate.cache.use_second_level_cache">false</prop>
+                <prop key="hibernate.cache.use_query_cache">false</prop>
+                <prop key="hibernate.ejb.event.post-insert">com.ssh.common.core.audit.AuditEventListener</prop>
+                <prop key="hibernate.ejb.event.post-update">com.ssh.common.core.audit.AuditEventListener</prop>
+                <prop key="hibernate.ejb.event.post-delete">com.ssh.common.core.audit.AuditEventListener</prop>
+                <!--
+                <prop key="hibernate.ejb.event.post-collection-recreate">com.ssh.common.core.audit.AuditEventListener</prop>
+                <prop key="hibernate.ejb.event.pre-collection-update">com.ssh.common.core.audit.AuditEventListener</prop>
+                <prop key="hibernate.ejb.event.pre-collection-remove">com.ssh.common.core.audit.AuditEventListener</prop>
+                -->
+            </props>
+        </property>
+        <property name="packagesToScan" value="com.ssh.*.core.entity"/>
+    </bean>
+    <!--<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>-->
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+
+    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="add*" propagation="REQUIRED"/>
+            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="edit*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="remove*" propagation="REQUIRED"/>
+            <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="query*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="*" propagation="SUPPORTS" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+        <aop:advisor advice-ref="transactionAdvice" pointcut="execution(* com.ssh.*.core.service.*Impl.*(..))"/>
+    </aop:config>
+
+    <!--
+        注意: 使用FreeMarker处理SQL模板时禁止使用SQL拼接.
+        (1)${param} => 使用字符串拼接, 直接参与sql编译, 从而不能避免注入攻击;
+        (2):param => 使用PreparedStatement, sql语句会预编译在数据库系统中, 不仅提高了安全性, 还提高了执行效率.
+        为什么使用PreparedStatement就能防止SQL注入?
+        原因: SQL语句在程序运行前已经进行了预编译, 在程序运行时第一次操作数据库之前, SQL语句已经被数据库分析、编译和优化,
+        对应的执行计划也会缓存下来并允许数据库以参数化的形式进行查询, 当运行时动态地把参数传给PreparedStatement时,
+        即使参数里有敏感字符如' OR 1=1', 数据库也会把它作为参数字段的属性值来处理而不会作为一个SQL指令, 这样就有效地防止了SQL注入.
+    -->
+    <bean id="mapperBuilder" class="com.ssh.common.core.xml.support.XMLMapperBuilder">
+        <property name="locations">
+            <list>
+                <value>classpath*:mapper/*-query.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="configuration" class="freemarker.template.Configuration">
+        <!-- 如果变量为null则转化为空字符串 -->
+        <property name="classicCompatible" value="true"/>
+        <!-- 去掉多余的空格 -->
+        <property name="whitespaceStripping" value="true"/>
+        <!-- 标签类型 -->
+        <property name="tagSyntax" value="0"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="outputEncoding" value="UTF-8"/>
+        <property name="dateFormat" value="yyyy-MM-dd"/>
+        <property name="timeFormat" value="HH:mm:ss"/>
+        <property name="dateTimeFormat" value="yyyy-MM-dd HH:mm:ss"/>
+        <property name="numberFormat" value="#"/>
+        <property name="sharedVaribles">
+            <map>
+                <entry key="where">
+                    <bean class="com.ssh.common.core.repository.template.WhereDirective"/>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean class="com.ssh.common.core.repository.template.StatementTemplateBuilder">
+        <constructor-arg index="0" ref="mapperBuilder"/>
+        <constructor-arg index="1" ref="configuration"/>
+    </bean>
+
+    <bean class="com.ssh.common.core.proxy.support.RepositoryScannerConfigurer">
+        <property name="basePackage" value="com.ssh.*.core.repository"/>
+        <property name="annotationClass" value="com.ssh.common.core.annotation.RepositoryBean"/>
+    </bean>
+
+    <!-- @AspectJ Support -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+</beans>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/jee
+       http://www.springframework.org/schema/jee/spring-jee.xsd">
+
+    <!-- 注意:Spring容器仅允许最多定义一个PropertyPlaceholderConfigurer或<context:property-placeholder/> -->
+    <!-- <context:property-placeholder location="classpath:jdbc.properties"/> -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations" value="classpath:jdbc.properties"/>
+    </bean>
+
+    <beans profile="dev">
+        <bean id="dataSource" class="com.ssh.common.core.datasource.DruidDataSource" destroy-method="close">
+            <property name="url" value="${jdbc.url}"/>
+            <property name="username" value="${jdbc.username}"/>
+            <property name="password" value="${jdbc.password}"/>
+            <property name="driverClassName" value="${jdbc.driver}"/>
+            <property name="validationQuery" value="${validationQuery}"/>
+            <property name="initialSize" value="5"/>
+            <property name="minIdle" value="5"/>
+            <!--<property name="maxIdle" value="10"/>-->
+            <property name="testOnBorrow" value="false"/>
+            <property name="testOnReturn" value="false"/>
+            <property name="testWhileIdle" value="true"/>
+            <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+            <property name="minEvictableIdleTimeMillis" value="25200000"/>
+            <property name="removeAbandonedTimeout" value="1800"/>
+            <property name="logAbandoned" value="true"/>
+        </bean>
+    </beans>
+
+    <beans profile="prod">
+        <jee:jndi-lookup id="dataSource" jndi-name="${jndi.datasource}" resource-ref="true"/>
+        <!-- Tomcat -->
+        <!--
+        <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+            <property name="jndiName" value="java:comp/env/${jndi.datasource}"/>
+        </bean>
+        -->
+        <!-- WebLogic -->
+        <!--
+        <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+            <property name="jndiName" value="${jndi.datasource}"/>
+        </bean>
+        -->
+    </beans>
+
+</beans>

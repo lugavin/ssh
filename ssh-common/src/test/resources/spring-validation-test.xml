@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--
+        Scans the classpath for annotated components that will be auto-registered as Spring beans.
+        By default, the Spring-provided @Component, @Repository, @Service, @Controller,
+        @RestController, @ControllerAdvice, and @Configuration stereotypes will be detected.
+    -->
+    <context:component-scan base-package="com.ssh.common"/>
+
+    <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
+        <property name="validator" ref="validator"/>
+    </bean>
+
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
+        <!-- 指定校验使用的资源文件(如果不指定则默认使用classpath下的ValidationMessage.properties文件) -->
+        <property name="validationMessageSource">
+            <bean class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+                <property name="basenames">
+                    <list>
+                        <value>classpath:ValidationMessages</value>
+                        <value>classpath:org/hibernate/validator/ValidationMessages</value>
+                    </list>
+                </property>
+                <property name="defaultEncoding" value="utf-8"/>
+                <property name="cacheSeconds" value="120"/>
+            </bean>
+        </property>
+    </bean>
+
+    <!-- Enables the use of the @AspectJ style of Spring AOP. -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+</beans>

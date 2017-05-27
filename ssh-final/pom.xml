@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <groupId>com.ssh</groupId>
+        <artifactId>ssh-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../ssh-parent</relativePath>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>ssh-final</artifactId>
+    <packaging>war</packaging>
+
+    <name>${project.artifactId}</name>
+    <url>http://maven.apache.org</url>
+
+    <dependencies>
+
+        <!-- Common Module -->
+
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>ssh-common</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>ssh-common-core</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>ssh-common-web</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <!-- Sys Module -->
+
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>ssh-sys-api</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>ssh-sys-core</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ssh</groupId>
+            <artifactId>ssh-sys-web</artifactId>
+            <version>${project.parent.version}</version>
+            <type>war</type>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Other Module -->
+
+    </dependencies>
+
+    <build>
+        <finalName>${project.name}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
+                    <overlays>
+                        <overlay>
+                            <groupId>${project.parent.groupId}</groupId>
+                            <artifactId>ssh-sys-web</artifactId>
+                            <excludes>
+                                <exclude>WEB-INF/lib/*</exclude>
+                                <exclude>WEB-INF/*.xml</exclude>
+                            </excludes>
+                        </overlay>
+                    </overlays>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

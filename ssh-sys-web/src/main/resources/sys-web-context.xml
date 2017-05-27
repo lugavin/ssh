@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--
+        <context:annotation-config />用于激活在Spring容器中注册过的Bean上面的注解
+        (激活注解但不能注册Bean{@Autowired|@Required|@PersistenceContext})
+        <context:component-scan />除了具有<context:annotation-config />的功能以外还可以在指定package下注册JavaBean
+        (激活注解同时还能注册Bean{@Controller|@Service|@Repository|@Component})
+    -->
+    <!-- 扫描和注册Bean -->
+    <context:component-scan base-package="com.ssh.sys.web"/>
+
+</beans>

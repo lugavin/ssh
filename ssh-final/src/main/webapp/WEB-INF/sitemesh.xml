@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+<sitemesh xmlns="http://sitemesh.org/xml/config"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://sitemesh.org/xml/config
+          http://sitemesh.org/xml/config/sitemesh3.xsd">
+-->
+<sitemesh>
+
+    <!-- Map default decorator. This shall be applied to all paths if no other paths match. -->
+    <mapping decorator="/decorators/default.jsp"/>
+
+    <!-- Map decorators to path patterns. -->
+    <mapping path="/admin/*" decorator="/decorators/admin-decorator.jsp"/>
+
+    <!-- Alternative convention. This is more verbose but allows multiple decorators to be applied to a single path. -->
+    <!--
+    <mapping>
+        <path>/articles/*</path>
+        <decorator>/decorators/article.html</decorator>
+        <decorator>/decorators/two-page-layout.html</decorator>
+        <decorator>/decorators/common.html</decorator>
+    </mapping>
+    -->
+
+    <!-- Exclude path from decoration. -->
+    <!--<mapping path="/druid/*" exclude="true"/>-->
+
+</sitemesh>
