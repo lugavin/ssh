@@ -30,16 +30,34 @@
                 <entry key="authc" value-ref="simpleFormAuthenticationFilter"/>
             </map>
         </property>
+        <property name="filterChainDefinitionMap">
+            <map>
+                <!--静态资源的匿名访问-->
+                <entry key="/favicon.ico" value="anon"/>
+                <entry key="/assets/**" value="anon"/>
+                <entry key="/captcha/**" value="anon"/>
+                <entry key="/error/**" value="anon"/>
+                <!--/security/logout对应的Java类可以不存在-->
+                <entry key="/security/logout" value="logout"/>
+                <!--配置记住我或认证通过可以访问的地址-->
+                <entry key="/portal/**" value="user"/>
+                <entry key="/**" value="authc"/>
+            </map>
+        </property>
+        <!--
         <property name="filterChainDefinitions">
             <value>
-                /assets/**=anon             <!--静态资源的匿名访问-->
+                /favicon.ico=anon
+                /assets/**=anon
                 /captcha/**=anon
+                /favicon.ico=anon
                 /error/**=anon
-                /security/logout=logout     <!--/security/logout对应的Java类可以不存在-->
-                /portal/**=user             <!--配置记住我或认证通过可以访问的地址-->
+                /security/logout=logout
+                /portal/**=user
                 /**=authc
             </value>
         </property>
+        -->
     </bean>
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
@@ -101,7 +119,8 @@
     This requires Shiro's Spring AOP integration to scan for the appropriate annotated classes and perform security logic as necessary.
     See <a>http://shiro.apache.org/spring.html</a> for more details.
     -->
-    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor">
         <property name="proxyTargetClass" value="true"/>
     </bean>
 

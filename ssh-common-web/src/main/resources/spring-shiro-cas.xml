@@ -24,9 +24,23 @@
                 <entry key="cas" value-ref="casFilter"/>
             </map>
         </property>
+        <property name="filterChainDefinitionMap">
+            <map>
+                <entry key="/cas" value="cas"/>
+                <entry key="/favicon.ico" value="anon"/>
+                <entry key="/assets/**" value="anon"/>
+                <entry key="/captcha/**" value="anon"/>
+                <entry key="/error/**" value="anon"/>
+                <entry key="/security/logout" value="logout"/>
+                <entry key="/portal/**" value="user"/>
+                <entry key="/**" value="user"/>
+            </map>
+        </property>
+        <!--
         <property name="filterChainDefinitions">
             <value>
                 /cas=cas
+                /favicon.ico=anon
                 /assets/**=anon
                 /captcha/**=anon
                 /error/**=anon
@@ -35,6 +49,7 @@
                 /**=user
             </value>
         </property>
+        -->
     </bean>
 
     <bean id="logout" class="org.apache.shiro.web.filter.authc.LogoutFilter">
