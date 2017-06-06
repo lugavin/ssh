@@ -51,7 +51,7 @@ public abstract class AuditUtils {
             return null;
         }
         if (value instanceof Date) {
-            return DateFormatUtils.format((Date) value, Constant.DEFAULT_DATETIME_PATTERN);
+            return DateFormatUtils.format((Date) value, Constant.DATETIME_FORMAT);
         }
         return value.toString();
     }

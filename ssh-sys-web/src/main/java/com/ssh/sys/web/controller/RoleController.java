@@ -1,7 +1,7 @@
 package com.ssh.sys.web.controller;
 
 import com.ssh.common.dto.ModelMapDTO;
-import com.ssh.common.web.data.ResponseData;
+import com.ssh.common.web.base.ResponseData;
 import com.ssh.sys.api.dto.RoleDTO;
 import com.ssh.sys.api.service.PermissionService;
 import com.ssh.sys.api.service.RoleService;

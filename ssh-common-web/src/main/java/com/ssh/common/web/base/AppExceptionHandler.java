@@ -3,7 +3,6 @@ package com.ssh.common.web.base;
 import com.ssh.common.exception.AbstractException;
 import com.ssh.common.exception.UnknownException;
 import com.ssh.common.util.Constant;
-import com.ssh.common.web.data.ResponseData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;

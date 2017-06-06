@@ -18,8 +18,8 @@ public abstract class PropertiesLoader {
 
     public enum Config {
         PHASE_ENV, PAGE_SIZE, USE_CAPTCHA,
-        DATE_FORMAT, DATETIME_FORMAT,
-        COMPANY_NAME, PROJECT_NAME
+        DATE_FORMAT, TIME_FORMAT, DATETIME_FORMAT,
+        COMPANY, PROJECT
     }
 
     public static void init(String... resources) {

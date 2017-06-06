@@ -132,7 +132,7 @@
         <div class="navbar-header">
             <a href="#" class="navbar-brand">
                 <i class="fa fa-html5 fa-lg"></i>
-                <small>${applicationScope.app.projectName}</small>
+                <small>${applicationScope.app.project}</small>
             </a>
         </div>
         <div id="navbar" class="navbar-header" role="navigation">
@@ -203,7 +203,7 @@
     <footer class="nav navbar-fixed-bottom navbar-inverse">
         <div class="text-center">
             <address class="navbar-link" style="display: inline;">
-                <small>Copyright © 2016 ${applicationScope.app.companyName} All Rights Reserved</small>
+                <small>© 2016 - 2017 ${applicationScope.app.company} Inc.</small>
             </address>
         </div>
     </footer>

@@ -28,8 +28,8 @@ public class DateConverter implements Converter<String, Date> {
 
         if (patterns.isEmpty()) {
             patterns.addAll(Arrays.asList(
-                    PropertiesLoader.getValue(PropertiesLoader.Config.DATE_FORMAT, Constant.DEFAULT_DATE_PATTERN),
-                    PropertiesLoader.getValue(PropertiesLoader.Config.DATETIME_FORMAT, Constant.DEFAULT_DATETIME_PATTERN)
+                    PropertiesLoader.getValue(PropertiesLoader.Config.DATE_FORMAT, Constant.DATE_FORMAT),
+                    PropertiesLoader.getValue(PropertiesLoader.Config.DATETIME_FORMAT, Constant.DATETIME_FORMAT)
             ));
         }
         try {

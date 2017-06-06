@@ -1,4 +1,4 @@
-package com.ssh.sys.web.controller;
+package com.ssh.common.web.controller;
 
 import com.ssh.common.exception.IncorrectCaptchaException;
 import com.ssh.common.util.Constant;

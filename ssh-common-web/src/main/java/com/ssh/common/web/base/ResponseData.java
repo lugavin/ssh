@@ -1,4 +1,4 @@
-package com.ssh.common.web.data;
+package com.ssh.common.web.base;
 
 import com.ssh.common.enums.StatusCode;
 import org.apache.commons.lang3.builder.ToStringBuilder;

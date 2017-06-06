@@ -190,7 +190,7 @@
     <footer class="nav navbar-fixed-bottom navbar-inverse">
         <div class="text-center">
             <address class="navbar-link" style="display: inline;">
-                <small>Copyright © 2016 ${applicationScope.app.companyName} All Rights Reserved</small>
+                <small>© 2016 - 2017 Gavin Software Inc.</small>
             </address>
         </div>
     </footer>

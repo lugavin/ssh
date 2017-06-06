@@ -3,7 +3,7 @@ package com.ssh.sys.web.controller;
 import com.ssh.common.dto.ModelMapDTO;
 import com.ssh.common.page.Page;
 import com.ssh.common.util.Constant;
-import com.ssh.common.web.data.ResponseData;
+import com.ssh.common.web.base.ResponseData;
 import com.ssh.common.web.datatable.DataTableRequest;
 import com.ssh.common.web.datatable.DataTableResponse;
 import com.ssh.common.web.datatable.DataTableUtility;
