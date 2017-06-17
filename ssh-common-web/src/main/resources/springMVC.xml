@@ -41,6 +41,14 @@
         <property name="cacheable" value="false"/>
         <property name="characterEncoding" value="UTF-8"/>
     </bean>
+    <!--
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+        <property name="cache" value="false"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+    </bean>
+    -->
 
     <!-- 自动注入RequestMappingHandlerMapping和RequestMappingHandlerAdapter -->
     <mvc:annotation-driven conversion-service="conversionService" validator="validator">
