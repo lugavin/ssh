@@ -131,10 +131,7 @@
     <servlet-mapping>
         <servlet-name>spring</servlet-name>
         <url-pattern>/</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>spring</servlet-name>
-        <url-pattern>*.htm</url-pattern>
+        <!--<url-pattern>*.htm</url-pattern>-->
     </servlet-mapping>
 
     <!-- Druid(配置Druid监控信息显示页面) -->

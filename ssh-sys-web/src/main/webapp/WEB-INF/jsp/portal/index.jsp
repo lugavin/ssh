@@ -196,7 +196,7 @@
     </nav>
     <div id="page-wrapper">
         <div class="main-content">
-            <iframe id="iframe" name="iframe" src="${contextPath}/portal/dashboard.htm" class="embed-responsive-item"
+            <iframe id="iframe" name="iframe" src="${contextPath}/portal/dashboard" class="embed-responsive-item"
                     frameborder="0" scrolling="auto"></iframe>
         </div>
     </div>
