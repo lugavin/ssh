@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{login}">登录页面</title>
+    <style type="text/css">
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100vh;
+            min-width: 480px;
+            min-height: 600px;
+            /*background: url('assets/img/bg.jpg') no-repeat 50% 50%;*/
+            background-color: #f8f8f8;
+            background-size: cover;
+        }
+
+        #captcha {
+            width: 50%;
+            display: inline;
+        }
+
+        #captchaImg {
+            width: 120px;
+            height: 34px;
+            cursor: pointer;
+        }
+    </style>
+    <script type="text/javascript">
+        // 解决session过期跳转到登陆页面并跳出iframe框架的问题
+        if (top != window.self) {
+            top.location.href = location.href;
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-default" style="margin-top: 30%">
+                <div class="panel-heading">
+                    <h5 class="panel-title" th:text="#{pleaseLogin}">请登录</h5>
+                </div>
+                <div class="panel-body">
+                    <form id="form" th:action="@{/security/login}" method="post" role="form">
+                        <fieldset>
+                            <div th:if="${#request.getAttribute('exception')!=null}">
+                                <div class="form-group">
+                                    <div class="label label-danger" style="font-size: 1.5rem;">
+                                        <i class="fa fa-warning fa-lg"></i>
+                                        <span th:text="${#request.getAttribute('exception')}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label sr-only" for="username" th:text="#{username}">用户名</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <input id="username" name="username" type="text" class="form-control" autofocus="autofocus"
+                                           placeholder="用户名" th:placeholder="#{username}"
+                                           data-bv-notempty="true"
+                                           data-bv-stringlength="true"
+                                           data-bv-stringlength-min="5"
+                                           data-bv-stringlength-max="10">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label sr-only" for="password" th:text="#{password}">密码</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                    <input id="password" name="password" type="password" class="form-control"
+                                           placeholder="密码" th:placeholder="#{password}"
+                                           data-bv-notempty="true">
+                                </div>
+                            </div>
+                            <div th:if="${#servletContext.getAttribute('app')['useCaptcha']=='true'}">
+                                <div class="form-group">
+                                    <label class="control-label sr-only" for="captcha" th:text="#{captcha}">验证码</label>
+                                    <input id="captcha" name="captcha" type="text" class="form-control"
+                                           placeholder="验证码" th:placeholder="#{captcha}"
+                                           data-bv-notempty="true"
+                                           data-bv-stringlength="true"
+                                           data-bv-stringlength-min="4">
+                                    <img id="captchaImg" alt="kaptcha.jpg" src="captcha/getCaptcha" title="点击刷新"
+                                         th:src="@{/captcha/getCaptcha}" th:title="#{clickToRefresh}"
+                                         data-toggle="tooltip">
+                                </div>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="rememberMe" type="checkbox">
+                                    <span th:text="#{rememberMe}">记住我</span>
+                                </label>
+                            </div>
+                            <input type="submit" value="登录" th:value="#{login}" class="btn btn-success btn-block">
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    require([
+        'jquery',
+        'bootstrap',
+        'bootstrapValidator'
+    ], function ($) {
+
+        $('#form').bootstrapValidator({
+            /*
+            fields: {
+                captcha: {
+                    validators: {
+                        notEmpty: {},
+                        callback: {
+                            message: '验证码不匹配!',
+                            callback: function (value, validator) {
+                                return /^[0-9]{4}$/.test(value);
+                            }
+                        },
+                        remote: {
+                            message: '验证码不匹配!',
+                            url: 'captcha/validateCaptcha'
+                        }
+                    }
+                }
+            }
+            */
+        });
+
+        $('#captchaImg').click(function () {
+            $(this).attr('src', 'captcha/getCaptcha?random' + Math.floor(Math.random() * 1000)).fadeIn();
+        });
+
+    });
+</script>
+</body>
+</html>
