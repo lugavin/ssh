@@ -89,6 +89,7 @@ public class PermissionServiceImpl implements PermissionService {
         entity.setUrl(permissionDTO.getUrl());
         entity.setStatus(permissionDTO.getStatus());
         entity.setSeq(permissionDTO.getSeq());
+        entity.setIcon(permissionDTO.getIcon());
         updateSubParentIds(entity);
     }
 

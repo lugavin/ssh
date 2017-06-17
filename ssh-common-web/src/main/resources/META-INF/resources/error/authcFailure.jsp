@@ -7,7 +7,6 @@
 <body>
 <div class="alert alert-danger" role="alert">
     <p>认证失败！</p>
-    <p>失败原因: ${requestScope.exception}</p>
 </div>
 </body>
 </html>

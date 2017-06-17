@@ -1,15 +1,11 @@
 package com.ssh.common.web.base;
 
 import com.ssh.common.exception.AbstractException;
-import com.ssh.common.exception.UnknownException;
-import com.ssh.common.util.Constant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 /**
@@ -32,28 +28,21 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
                 .setMessage(ex.getMessage());
     }
 
-    @ResponseBody
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseData handleApplicationException(RuntimeException ex) {
-        LOGGER.error(ex.getMessage(), ex);
-        AbstractException exception = new UnknownException(ex);
-        return new ResponseData()
-                .setSuccess(Boolean.FALSE)
-                .setCode(exception.getErrorCode())
-                .setMessage(exception.getMessage());
-    }
+    // @ResponseBody
+    // @ExceptionHandler(RuntimeException.class)
+    // public ResponseData handleApplicationException(RuntimeException ex) {
+    //     LOGGER.error(ex.getMessage(), ex);
+    //     AbstractException exception = new UnknownException(ex);
+    //     return new ResponseData()
+    //             .setSuccess(Boolean.FALSE)
+    //             .setCode(exception.getErrorCode())
+    //             .setMessage(exception.getMessage());
+    // }
 
     @ExceptionHandler(Exception.class)
-    public String handleApplicationException(Exception ex, WebRequest request) {
+    public String handleApplicationException(Exception ex) {
         LOGGER.error(ex.getMessage(), ex);
-        request.setAttribute(Constant.EXCEPTION_ATTRIBUTE, ex.getMessage(), RequestAttributes.SCOPE_REQUEST);
-        return "forward:/error/exception.jsp";
+        return "redirect:/error/exception.jsp?err=" + ex.getMessage();
     }
-
-    // @ExceptionHandler(Throwable.class)
-    // public String handleApplicationException(Throwable ex, WebRequest request) {
-    //     LOGGER.error(ex.getMessage(), ex);
-    //     return "redirect:/error/error.jsp";
-    // }
 
 }

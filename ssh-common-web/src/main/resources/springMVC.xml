@@ -25,51 +25,32 @@
     <!-- @AspectJ Support -->
     <!--<aop:aspectj-autoproxy proxy-target-class="true"/>-->
 
-    <!-- Spring集成Shiro拦截异常信息实现跳转 -->
-    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-        <property name="exceptionMappings">
-            <props>
-                <prop key="org.apache.shiro.authz.UnauthenticatedException">redirect:/security/login</prop>
-            </props>
-        </property>
-    </bean>
-
     <!-- 防止静态资源被拦截 -->
     <mvc:default-servlet-handler/>
     <!--<mvc:resources location="/assets/" mapping="/assets/**" />-->
 
     <!-- 配置视图解析器(物理视图=前缀+逻辑视图+后缀) -->
-    <!-- JSP -->
+    <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="templateEngine"/>
+        <property name="characterEncoding" value="UTF-8"/>
+    </bean>
+    <bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+        <property name="templateResolver" ref="templateResolver"/>
+    </bean>
+    <bean id="templateResolver" class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
+        <property name="prefix" value="/WEB-INF/html/"/>
+        <property name="suffix" value=".html"/>
+        <property name="templateMode" value="HTML5"/>
+        <property name="cacheable" value="false"/>
+        <property name="characterEncoding" value="UTF-8"/>
+    </bean>
+
+    <!--
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
         <property name="cache" value="false"/>
         <property name="contentType" value="text/html;charset=UTF-8"/>
-    </bean>
-
-    <!-- FreeMarker -->
-    <!--
-    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-        <property name="prefix" value="/WEB-INF/freemarker/"/>
-        <property name="suffix" value=".ftl"/>
-    </bean>
-    -->
-
-    <!-- Velocity -->
-    <!--
-    <bean class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
-        <property name="prefix" value=""/>
-        <property name="suffix" value=".vm"/>
-        <property name="cache" value="false"/>
-        <property name="contentType" value="text/html;charset=UTF-8"/>
-        <property name="exposeSpringMacroHelpers" value="true"/>
-        <property name="exposeRequestAttributes" value="true"/>
-        <property name="exposeSessionAttributes" value="true"/>
-        <property name="requestContextAttribute" value="rc"/>
-    </bean>
-    <bean class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
-        <property name="resourceLoaderPath" value="/velocity/"/>
-        <property name="velocityProperties" value="classpath:velocity.properties"/>
     </bean>
     -->
 

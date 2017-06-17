@@ -13,17 +13,6 @@
         <property name="loginUrl" value="/security/login"/>
         <!--认证成功统一跳转到首页(建议不配置, 由Shiro自动跳转到上一个请求路径)-->
         <property name="successUrl" value="/"/>
-        <!--
-            注意：当配置了Shiro权限注解后, 下面的配置将不起作用, 即当用户访问没有被授权的资源时将不会跳转到指定的路径
-            而是在页面显示org.apache.shiro.authz.UnauthorizedException异常信息.
-            解决方案：在struts.xml配置文件中添加以下配置来拦截Shiro异常信息以实现跳转.
-            <global-results>
-                <result name="unauthorizedException">/error/authzRefuse.jsp</result>
-            </global-results>
-            <global-exception-mappings>
-                <exception-mapping result="unauthorizedException" exception="org.apache.shiro.authz.UnauthorizedException"/>
-            </global-exception-mappings>
-        -->
         <property name="unauthorizedUrl" value="/error/authzRefuse.jsp"/>
         <property name="filters">
             <map>

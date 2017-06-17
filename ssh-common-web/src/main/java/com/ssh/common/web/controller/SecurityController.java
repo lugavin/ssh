@@ -22,6 +22,7 @@ public class SecurityController {
                 request.setAttribute(Constant.EXCEPTION_ATTRIBUTE, "Invalid Username/Password");
             }
         }
+
         // 认证失败转到登录页面(认证成功由Shiro自动转到上一请求路径)
         return "security/login";
     }

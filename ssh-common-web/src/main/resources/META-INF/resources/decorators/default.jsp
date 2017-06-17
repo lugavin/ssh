@@ -13,12 +13,6 @@
     <script type="text/javascript" src="assets/js/app.js"></script>
     <script type="text/javascript" src="assets/js/config.js"></script>
     <script type="text/javascript" src="assets/js/require.js"></script>
-    <%--
-    <link rel="stylesheet" href="<c:url value="/assets/css/app.min.css"/>">
-    <script type="text/javascript" src="<c:url value="/assets/js/app.js"/>"></script>
-    <script type="text/javascript" src="<c:url value="/assets/js/config.js"/>"></script>
-    <script type="text/javascript" src="<c:url value="/assets/js/require.js"/>"></script>
-    --%>
     <sitemesh:write property='head'/>
 </head>
 <body>

@@ -7,7 +7,7 @@
 <body>
 <div class="alert alert-danger" role="alert">
     <p>出错啦！</p>
-    <p>错误信息: ${requestScope.exception}</p>
+    <p>異常信息: ${param.err}</p>
 </div>
 </body>
 </html>
