@@ -14,7 +14,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <javaee-api.version>7.0</javaee-api.version>
         <spring.version>4.3.3.RELEASE</spring.version>
         <spring-data-jpa.version>1.10.5.RELEASE</spring-data-jpa.version>
         <hibernate.version>3.6.10.Final</hibernate.version>
@@ -42,6 +41,7 @@
         <thymeleaf.version>3.0.2.RELEASE</thymeleaf.version>
         <commons-lang3.version>3.2.1</commons-lang3.version>
         <commons-fileupload.version>1.3.1</commons-fileupload.version>
+        <javaee-api.version>7.0</javaee-api.version>
         <jstl-api.version>1.2</jstl-api.version>
         <junit.version>4.12</junit.version>
     </properties>
@@ -53,14 +53,6 @@
 
     <dependencyManagement>
         <dependencies>
-
-            <!-- JavaEE Specification API -->
-            <dependency>
-                <groupId>javax</groupId>
-                <artifactId>javaee-api</artifactId>
-                <version>${javaee-api.version}</version>
-                <scope>provided</scope>
-            </dependency>
 
             <!-- Spring Core -->
             <dependency>
@@ -368,6 +360,14 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
+            </dependency>
+
+            <!-- JavaEE Specification API -->
+            <dependency>
+                <groupId>javax</groupId>
+                <artifactId>javaee-api</artifactId>
+                <version>${javaee-api.version}</version>
+                <scope>provided</scope>
             </dependency>
 
             <!-- JSP Standard Tag Library API -->
