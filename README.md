@@ -1,5 +1,5 @@
 # ssh
-- 项目基于 [Dubbo](http://dubbo.io/) 框架来构建分布式服务，前端采用 [Bootstrap](http://getbootstrap.com/) 框架，后端采用了 [SpringMVC](https://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html)、[Spring](https://spring.io/)、[JPA](https://docs.spring.io/spring-data/jpa/docs/1.6.0.RELEASE/reference/html/jpa.repositories.html)、[Shiro](https://shiro.apache.org/)、[Dubbo](http://dubbo.io/) 等技术；
+- 项目基于 [Dubbo](http://dubbo.io/) 框架来构建分布式服务，前端基于 [Thymeleaf](http://www.thymeleaf.org/)模板技术以取代JSP，并采用了 [Bootstrap](http://getbootstrap.com/) 框架，后端采用了 [SpringMVC](https://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html)、[Spring](https://spring.io/)、[JPA](https://docs.spring.io/spring-data/jpa/docs/1.6.0.RELEASE/reference/html/jpa.repositories.html)、[Shiro](https://shiro.apache.org/)、[Dubbo](http://dubbo.io/) 等技术；
 - 项目已实现了权限管理、审计日志（字段级别）等基本功能；  
 - 项目实现了通用的服务端参数合法性校验功能并模仿 [MyBatis](http://www.mybatis.org/mybatis-3/zh/) 实现了DAO代理开发和动态 SQL/HQL 查询功能。  
 
