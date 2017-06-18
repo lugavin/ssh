@@ -9,6 +9,7 @@
     <import resource="classpath:spring-web-context.xml"/>
     <import resource="classpath:spring-shiro-cas.xml"/>
     <import resource="classpath:sys-web-consumer.xml"/>
+    <import resource="classpath:sys-web-context.xml"/>
     -->
 
     <!-- =============== Dev Env =============== -->
@@ -16,9 +17,9 @@
     <import resource="classpath:spring-druid.xml"/>
     <import resource="classpath:spring-core-context.xml"/>
     <import resource="classpath:spring-web-context.xml"/>
-    <!--<import resource="classpath:spring-freemarker.xml"/>-->
     <import resource="classpath:spring-shiro.xml"/>
+    <!--<import resource="classpath:spring-freemarker.xml"/>-->
     <import resource="classpath:sys-core-context.xml"/>
-    <!--<import resource="classpath:sys-web-context.xml"/>-->
+    <import resource="classpath:sys-web-context.xml"/>
 
 </beans>
