@@ -14,9 +14,7 @@
     <script type="text/javascript" src="assets/js/config.js"></script>
     <script type="text/javascript" src="assets/js/require.js"></script>
     <script type="text/javascript">
-        var Base = {
-            contextPath: '<c:url value="/"/>'
-        };
+        Base.contextPath = '<c:url value="/"/>';
     </script>
     <sitemesh:write property='head'/>
 </head>
