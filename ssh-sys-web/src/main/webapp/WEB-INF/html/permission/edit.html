@@ -44,7 +44,7 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="type">资源类型</label>
             <div class="col-sm-8">
-                <select id="type" name="type" th:value="${permission.type}" class="form-control" data-provide="select2" data-bv-notempty="true">
+                <select id="type" name="type" class="form-control" data-provide="select2" data-bv-notempty="true">
                     <option value="FUNC" th:selected="${permission.type=='FUNC'}">功能</option>
                     <option value="MENU" th:selected="${permission.type=='MENU'}">菜单</option>
                 </select>
@@ -53,9 +53,9 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="status">资源状态</label>
             <div class="col-sm-8">
-                <select id="status" name="status" th:value="${permission.status}" class="form-control" data-provide="select2" data-bv-notempty="true">
-                    <option value="1" th:selected="${permission.status=='1'}">可用</option>
-                    <option value="0" th:selected="${permission.status=='0'}">不可用</option>
+                <select id="status" name="status" class="form-control" data-provide="select2" data-bv-notempty="true">
+                    <option value="1" th:selected="${permission.status==1}">可用</option>
+                    <option value="0" th:selected="${permission.status==0}">不可用</option>
                 </select>
             </div>
         </div>

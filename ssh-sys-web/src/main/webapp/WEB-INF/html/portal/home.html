@@ -159,9 +159,8 @@
                 <li>
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                         <img src="assets/img/user.jpg" class="img-circle" style="max-width: 30px;">
-                        <span class="user-info">
+                        <span class="user-info" th:utext="'<small>欢迎您</small> '+${session.activeUser.name}">
                             <small>欢迎您</small>
-                            <span th:text="${session.activeUser.name}"></span>
                         </span>
                         <i class="fa fa-caret-down"></i>
                     </a>
