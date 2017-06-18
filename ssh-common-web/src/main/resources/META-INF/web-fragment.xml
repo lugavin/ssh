@@ -7,10 +7,6 @@
 
     <!--
     <context-param>
-        <param-name>spring.profiles.active</param-name>
-        <param-value>dev,prod</param-value>
-    </context-param>
-    <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/applicationContext.xml</param-value>
     </context-param>
@@ -29,7 +25,7 @@
         <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
     </listener>
 
-    <!-- 配置Spring的监听器用于初始化ApplicationContext容器(默认配置文件路径为:/WEB-INF/applicationContext.xml) -->
+    <!-- 配置Spring的监听器用于初始化ApplicationContext容器(默认配置文件为:/WEB-INF/applicationContext.xml) -->
     <!--
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
