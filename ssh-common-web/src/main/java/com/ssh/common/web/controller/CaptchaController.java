@@ -29,8 +29,8 @@ public class CaptchaController {
     /**
      * @see com.google.code.kaptcha.servlet.KaptchaServlet#doGet
      */
-    @RequestMapping(value = "/getCaptcha", method = RequestMethod.GET)
-    public void getCaptcha(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @RequestMapping(value = "/getCapImage", method = RequestMethod.GET)
+    public void getCapImage(HttpServletRequest request, HttpServletResponse response) throws Exception {
         // Set to expire far in the past.
         response.setDateHeader("Expires", 0);
         // Set standard HTTP/1.1 no-cache headers.
@@ -57,8 +57,8 @@ public class CaptchaController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/validateCaptcha")
-    public ModelMap validateCaptcha(@RequestParam String captcha, HttpSession session) {
+    @RequestMapping("/verify")
+    public ModelMap verify(@RequestParam String captcha, HttpSession session) {
         return new ModelMap(Constant.REMOTE_VALIDATION_KEY, captcha.equalsIgnoreCase((String) session.getAttribute(Constants.KAPTCHA_SESSION_KEY)));
     }
 

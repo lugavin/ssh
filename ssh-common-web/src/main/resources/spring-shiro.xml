@@ -19,34 +19,21 @@
                 <entry key="authc" value-ref="simpleFormAuthenticationFilter"/>
             </map>
         </property>
-        <property name="filterChainDefinitionMap">
-            <map>
-                <!--静态资源的匿名访问-->
-                <entry key="/favicon.ico" value="anon"/>
-                <entry key="/assets/**" value="anon"/>
-                <entry key="/captcha/**" value="anon"/>
-                <entry key="/error/**" value="anon"/>
-                <!--/security/logout对应的Java类可以不存在-->
-                <entry key="/security/logout" value="logout"/>
-                <!--配置记住我或认证通过可以访问的地址-->
-                <entry key="/portal/**" value="user"/>
-                <entry key="/**" value="authc"/>
-            </map>
-        </property>
-        <!--
         <property name="filterChainDefinitions">
             <value>
+                <!--静态资源的匿名访问-->
                 /favicon.ico=anon
                 /assets/**=anon
                 /captcha/**=anon
                 /favicon.ico=anon
                 /error/**=anon
+                <!--/security/logout对应的Java类可以不存在-->
                 /security/logout=logout
+                <!--配置记住我或认证通过可以访问的地址-->
                 /portal/**=user
                 /**=authc
             </value>
         </property>
-        -->
     </bean>
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">

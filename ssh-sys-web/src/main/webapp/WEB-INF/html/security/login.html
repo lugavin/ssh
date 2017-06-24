@@ -74,10 +74,9 @@
                             <input id="captcha" name="captcha" type="text" class="form-control"
                                    placeholder="验证码" th:placeholder="#{captcha}"
                                    data-bv-notempty="true"
-                                   data-bv-stringlength="true"
-                                   data-bv-stringlength-min="4">
-                            <img id="captchaImg" alt="kaptcha.jpg" src="captcha/getCaptcha" title="点击刷新"
-                                 th:src="@{/captcha/getCaptcha}" th:title="#{clickToRefresh}"
+                                   data-bv-threshold="6">
+                            <img id="captchaImg" src="" title="点击刷新" alt="正在生成验证码..."
+                                 th:src="@{/captcha/getCapImage}" th:title="#{clickToRefresh}" th:alt="#{captchaGen}"
                                  data-toggle="tooltip">
                         </div>
                         <div class="checkbox">
@@ -102,19 +101,21 @@
 
         $('#form').bootstrapValidator({
             <!--
+            feedbackIcons: {
+                valid: '',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
             fields: {
                 captcha: {
                     validators: {
-                        notEmpty: {},
-                        callback: {
-                            message: '验证码不匹配!',
-                            callback: function (value, validator) {
-                                return /^[0-9]{4}$/.test(value);
-                            }
-                        },
                         remote: {
                             message: '验证码不匹配!',
-                            url: 'captcha/validateCaptcha'
+                            url: Base.contextPath + 'captcha/verify',
+                            delay: 2000,
+                            data: function (validator) {
+                                return {captcha: validator.$form[0].captcha.value};
+                            }
                         }
                     }
                 }
@@ -123,7 +124,7 @@
         });
 
         $('#captchaImg').click(function () {
-            $(this).attr('src', 'captcha/getCaptcha?random' + Math.floor(Math.random() * 1000)).fadeIn();
+            $(this).attr('src', 'captcha/getCapImage?r=' + Math.random()).fadeIn();
         });
 
     });
