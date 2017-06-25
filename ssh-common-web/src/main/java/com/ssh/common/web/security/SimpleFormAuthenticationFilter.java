@@ -25,23 +25,25 @@ public class SimpleFormAuthenticationFilter extends FormAuthenticationFilter {
 
     @Override
     protected CaptchaUsernamePasswordToken createToken(ServletRequest request, ServletResponse response) {
-        String username = this.getUsername(request);
-        String password = this.getPassword(request);
-        boolean rememberMe = this.isRememberMe(request);
-        String host = this.getHost(request);
-        String captcha = this.getCaptcha(request);
-        return new CaptchaUsernamePasswordToken(username, password, rememberMe, host, captcha);
+        return new CaptchaUsernamePasswordToken(
+                getUsername(request),
+                getPassword(request),
+                isRememberMe(request),
+                getHost(request),
+                getCaptcha(request)
+        );
     }
 
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
-        CaptchaUsernamePasswordToken token = this.createToken(request, response);
+        CaptchaUsernamePasswordToken token = createToken(request, response);
         try {
+            // 若验证码校验失败则拒绝访问, 不再校验帐户和密码
             if (!doCaptchaVerify(request, token)) {
-                // 若验证码校验失败则拒绝访问, 不再校验帐户和密码
+                request.setAttribute(getFailureKeyAttribute(), IncorrectCaptchaException.class.getName());
                 return true;
             }
-            Subject subject = this.getSubject(request, response);
+            Subject subject = getSubject(request, response);
             subject.login(token);
             subject.getSession().setAttribute(Constant.USER_SESSION_KEY, subject.getPrincipal());
             return this.onLoginSuccess(token, subject, request, response);
@@ -59,11 +61,7 @@ public class SimpleFormAuthenticationFilter extends FormAuthenticationFilter {
             LOGGER.info("=== {} ===", "The captcha has expired");
             return false;
         }
-        if (!captcha.equalsIgnoreCase(token.getCaptcha())) {
-            request.setAttribute(this.getFailureKeyAttribute(), IncorrectCaptchaException.class.getName());
-            return false;
-        }
-        return true;
+        return captcha.equalsIgnoreCase(token.getCaptcha());
     }
 
     protected String getCaptcha(ServletRequest request) {

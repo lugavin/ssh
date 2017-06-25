@@ -52,6 +52,7 @@ public class CaptchaController {
         final String capText = captchaProducer.createText();
         // store the text in the session
         session.setAttribute(Constant.CAPTCHA_SESSION_KEY, capText);
+        // LOGGER.debug("JSESSIONID:{}", session.getId());
         LOGGER.debug("Store captcha [{}] in the session.", capText);
         // store the date in the session so that it can be compared
         // against to make sure someone hasn't taken too long to enter
@@ -64,7 +65,7 @@ public class CaptchaController {
             public void run() {
                 session.removeAttribute(Constant.CAPTCHA_SESSION_KEY);
                 session.removeAttribute(Constant.CAPTCHA_SESSION_DATE);
-                LOGGER.debug("Remove captcha [{}] from session.", capText);
+                LOGGER.debug("Remove captcha [{}] from the session.", capText);
                 timer.cancel();
             }
         }, TimeUnit.MILLISECONDS.convert(CAPTCHA_MAX_AGE, TimeUnit.SECONDS));
