@@ -11,11 +11,13 @@
     <context:component-scan base-package="com.ssh.*.web"/>
 
     <!-- 验证码 -->
-    <bean id="kaptchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+    <bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
         <property name="config">
             <bean class="com.google.code.kaptcha.util.Config">
                 <constructor-arg type="java.util.Properties">
                     <props>
+                        <prop key="kaptcha.session.key">captchaSessionKey</prop>
+                        <prop key="kaptcha.session.date">captchaSessionDate</prop>
                         <prop key="kaptcha.textproducer.char.length">6</prop>
                         <prop key="kaptcha.textproducer.font.color">red</prop>
                         <prop key="kaptcha.textproducer.font.size">34</prop>

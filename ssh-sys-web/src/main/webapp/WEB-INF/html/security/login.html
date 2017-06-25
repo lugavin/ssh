@@ -74,6 +74,9 @@
                             <input id="captcha" name="captcha" type="text" class="form-control"
                                    placeholder="验证码" th:placeholder="#{captcha}"
                                    data-bv-notempty="true"
+                                   data-bv-stringlength="true"
+                                   data-bv-stringlength-min="6"
+                                   data-bv-stringlength-max="6"
                                    data-bv-threshold="6">
                             <img id="captchaImg" src="" title="点击刷新" alt="正在生成验证码..."
                                  th:src="@{/captcha/getCapImage}" th:title="#{clickToRefresh}" th:alt="#{captchaGen}"

@@ -17,9 +17,9 @@ public class SecurityController {
         String exceptionName = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
         if (exceptionName != null) {
             if (IncorrectCaptchaException.class.getName().equals(exceptionName)) {
-                request.setAttribute(Constant.EXCEPTION_ATTRIBUTE, "Incorrect Captcha");
+                request.setAttribute(Constant.EXCEPTION_KEY, "Incorrect Captcha");
             } else {
-                request.setAttribute(Constant.EXCEPTION_ATTRIBUTE, "Invalid Username/Password");
+                request.setAttribute(Constant.EXCEPTION_KEY, "Invalid Username/Password");
             }
         }
 

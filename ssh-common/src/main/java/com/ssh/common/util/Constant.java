@@ -9,8 +9,11 @@ public interface Constant {
     String TIME_FORMAT = "HH:mm:ss";
     String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-    String USER_SESSION_ATTRIBUTE = "activeUser";
-    String EXCEPTION_ATTRIBUTE = "exception";
+    String USER_SESSION_KEY = "activeUser";
+    String CAPTCHA_SESSION_KEY = "captchaSessionKey";
+    String CAPTCHA_SESSION_DATE = "captchaSessionDate";
+
+    String EXCEPTION_KEY = "exception";
 
     String SLASHES_SEPARATOR = "/";
     String PERIOD_SEPARATOR = ".";
