@@ -79,8 +79,9 @@
                                    data-bv-stringlength-max="6"
                                    data-bv-threshold="6">
                             <img id="captchaImg" src="" title="点击刷新" alt="正在生成验证码..."
-                                 th:src="@{/captcha/getCapImage}" th:title="#{clickToRefresh}" th:alt="#{captchaGen}"
+                                 th:title="#{clickToRefresh}" th:alt="#{captchaGen}"
                                  data-toggle="tooltip">
+                            <input id="token" name="token" type="hidden">
                         </div>
                         <div class="checkbox">
                             <label>
@@ -103,7 +104,7 @@
     ], function ($) {
 
         $('#form').bootstrapValidator({
-            <!--
+            /*
             feedbackIcons: {
                 valid: '',
                 invalid: 'glyphicon glyphicon-remove',
@@ -123,12 +124,23 @@
                     }
                 }
             }
-            -->
+            */
         });
 
-        $('#captchaImg').click(function () {
-            $(this).attr('src', 'captcha/getCapImage?r=' + Math.random()).fadeIn();
+        var Captcha = {
+            refreshCaptcha: function () {
+                $.get("captcha/genToken", function (response) {
+                    $("#token").val(response.data);
+                    $("#captchaImg").attr({src: "captcha/getCaptcha?token=" + response.data});
+                });
+            }
+        };
+
+        $("#captchaImg").click(function () {
+            Captcha.refreshCaptcha();
         });
+
+        Captcha.refreshCaptcha();
 
     });
 </script>
