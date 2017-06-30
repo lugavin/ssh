@@ -5,7 +5,7 @@ import com.ssh.common.page.Page;
 import com.ssh.common.web.datatable.DataTableRequest;
 import com.ssh.common.web.datatable.DataTableResponse;
 import com.ssh.common.web.datatable.DataTableUtility;
-import com.ssh.common.web.wrapper.BaseWrapper;
+import com.ssh.common.web.base.BaseWrapper;
 import com.ssh.sys.api.service.AuditService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;

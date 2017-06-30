@@ -1,4 +1,4 @@
-package com.ssh.common.context;
+package com.ssh.common.audit;
 
 public interface IAuditContext {
 }

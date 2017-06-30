@@ -49,7 +49,7 @@ public class CaptchaController {
     @RequestMapping("/verify")
     public ModelMap verify(@RequestParam("token") String token, @RequestParam("captcha") String captcha) {
         try {
-            return new ModelMap(Constant.REMOTE_VALIDATION_KEY, captchaService.doVerify(token, captcha));
+            return new ModelMap(Constant.REMOTE_VALIDATION_KEY, captchaService.verify(token, captcha));
         } catch (Exception e) {
             return new ModelMap(Constant.REMOTE_VALIDATION_KEY, Boolean.FALSE);
         }

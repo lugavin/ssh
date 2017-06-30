@@ -64,7 +64,7 @@ public class SimpleFormAuthenticationFilter extends FormAuthenticationFilter {
     protected boolean doCaptchaVerify(CaptchaUsernamePasswordToken token) {
         try {
             return !PropertiesLoader.getBoolean(PropertiesLoader.Config.USE_CAPTCHA) ||
-                    captchaService.doVerify(token.getToken(), token.getCaptcha());
+                    captchaService.verify(token.getToken(), token.getCaptcha());
         } catch (Exception e) {
             LOGGER.warn("Verify captcha error: {}", e.getMessage());
             return false;

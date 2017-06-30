@@ -1,4 +1,4 @@
-package com.ssh.common.web.wrapper;
+package com.ssh.common.web.base;
 
 import com.ssh.common.dto.DTO;
 import com.ssh.common.web.datatable.DataTableRequest;

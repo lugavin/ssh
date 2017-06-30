@@ -1,24 +1,22 @@
 package com.ssh.common.web.captcha;
 
-import com.ssh.common.exception.BusinessException;
-
 import java.awt.image.BufferedImage;
 
 public interface CaptchaService {
 
     /**
-     * 生成验证码令牌
+     * 生成32位随机数
+     *
+     * @return 32位随机数
      */
     String genToken();
 
     /**
-     * 根据token获取验证码
+     * 生成验证码
      *
-     * @param token 被校验的token
-     * @return token中的验证码字符串
-     * @throws BusinessException
+     * @return 验证码
      */
-    String getCaptcha(String token) throws BusinessException;
+    String genCaptcha();
 
     /**
      * 根据验证码生成验证码图片
@@ -29,40 +27,21 @@ public interface CaptchaService {
     BufferedImage getCaptchaImage(String captcha);
 
     /**
-     * 验证输入的验证码与令牌是否匹配
+     * 根据token获取验证码
      *
-     * @param token   验证码令牌
-     * @param captcha 验证码
-     * @throws BusinessException
+     * @param token 验证码token
+     * @return 验证码
      */
-    boolean doVerify(String token, String captcha) throws BusinessException;
+    String getCaptcha(String token);
 
     /**
-     * 获取XXTEA加密解密的密钥
+     * 校验图片验证码是否正确
      *
-     * @return XXTEA加密解密的密钥
+     * @param token   图片验证码token
+     * @param captcha 图片验证码
+     * @return 图片验证码是否正确
+     * @throws Exception
      */
-    String getSecKey();
-
-    /**
-     * 获取验证码失效时限(秒)
-     *
-     * @return 验证码失效时限(秒)
-     */
-    int getMaxAge();
-
-    /**
-     * 获取缓存前缀
-     *
-     * @return 缓存前缀
-     */
-    String getCachePrefix();
-
-    /**
-     * 获取验证码字符数
-     *
-     * @return 验证码字符数
-     */
-    int getCharLength();
+    boolean verify(String token, String captcha) throws Exception;
 
 }

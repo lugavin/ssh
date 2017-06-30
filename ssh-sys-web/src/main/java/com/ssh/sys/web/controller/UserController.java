@@ -7,7 +7,7 @@ import com.ssh.common.web.base.ResponseData;
 import com.ssh.common.web.datatable.DataTableRequest;
 import com.ssh.common.web.datatable.DataTableResponse;
 import com.ssh.common.web.datatable.DataTableUtility;
-import com.ssh.common.web.wrapper.BaseWrapper;
+import com.ssh.common.web.base.BaseWrapper;
 import com.ssh.sys.api.dto.UserDTO;
 import com.ssh.sys.api.service.UserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;

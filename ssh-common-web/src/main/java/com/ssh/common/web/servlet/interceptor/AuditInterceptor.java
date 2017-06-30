@@ -1,6 +1,6 @@
 package com.ssh.common.web.servlet.interceptor;
 
-import com.ssh.common.context.AuditContext;
+import com.ssh.common.audit.AuditContext;
 import com.ssh.common.subject.ActiveUser;
 import com.ssh.common.util.SecurityHelper;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
