@@ -7,11 +7,7 @@ import com.ssh.sys.api.service.PermissionService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -48,7 +44,7 @@ public class PermissionController {
     @RequestMapping(value = "/addSubmit", method = RequestMethod.POST)
     public ResponseData addSubmit(@RequestBody PermissionDTO permissionDTO) {
         permissionService.add(permissionDTO);
-        return new ResponseData();
+        return ResponseData.newInstance();
     }
 
     @RequiresPermissions("permission:update")
@@ -63,7 +59,7 @@ public class PermissionController {
     @RequestMapping(value = "/editSubmit", method = {RequestMethod.POST})
     public ResponseData editSubmit(@RequestBody PermissionDTO permissionDTO) {
         permissionService.update(permissionDTO);
-        return new ResponseData();
+        return ResponseData.newInstance();
     }
 
     @ResponseBody
@@ -71,7 +67,7 @@ public class PermissionController {
     @RequestMapping(value = "/delete", method = {RequestMethod.POST})
     public ResponseData delete(@RequestParam Long id) {
         permissionService.delete(id);
-        return new ResponseData();
+        return ResponseData.newInstance();
     }
 
     @ResponseBody
@@ -79,7 +75,7 @@ public class PermissionController {
     @RequestMapping(value = "/deleteSubmit", method = {RequestMethod.POST})
     public ResponseData deleteSubmit(@RequestParam Long[] ids) {
         permissionService.delete(ids);
-        return new ResponseData();
+        return ResponseData.newInstance();
     }
 
 }

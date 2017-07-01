@@ -22,7 +22,7 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseBody
     @ExceptionHandler(AbstractException.class)
     public ResponseData handleApplicationException(AbstractException ex) {
-        return new ResponseData()
+        return ResponseData.newInstance()
                 .setSuccess(Boolean.FALSE)
                 .setCode(ex.getErrorCode())
                 .setMessage(ex.getMessage());
@@ -33,7 +33,7 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
     // public ResponseData handleApplicationException(RuntimeException ex) {
     //     LOGGER.error(ex.getMessage(), ex);
     //     AbstractException exception = new UnknownException(ex);
-    //     return new ResponseData()
+    //     return ResponseData.newInstance()
     //             .setSuccess(Boolean.FALSE)
     //             .setCode(exception.getErrorCode())
     //             .setMessage(exception.getMessage());

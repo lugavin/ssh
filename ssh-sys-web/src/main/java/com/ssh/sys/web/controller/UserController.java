@@ -79,7 +79,7 @@ public class UserController {
     @RequestMapping(value = "/addSubmit", method = RequestMethod.POST)
     public ResponseData addSubmit(UserDTO userDTO) {
         userService.add(userDTO);
-        return new ResponseData();
+        return ResponseData.newInstance();
     }
 
     @RequiresPermissions("user:update")
@@ -94,7 +94,7 @@ public class UserController {
     @RequestMapping(value = "/editSubmit", method = {RequestMethod.POST})
     public ResponseData editSubmit(UserDTO userDTO) {
         userService.update(userDTO);
-        return new ResponseData();
+        return ResponseData.newInstance();
     }
 
     @ResponseBody
@@ -169,21 +169,21 @@ public class UserController {
     @RequestMapping("/changePass")
     public ResponseData changePass(@RequestParam String oldPass, @RequestParam String newPass) {
         userService.changePass(oldPass, newPass);
-        return new ResponseData();
+        return ResponseData.newInstance();
     }
 
     @ResponseBody
     @RequestMapping("/resetPass")
     public ResponseData resetPass(@RequestParam Long[] ids) {
         userService.resetPass(ids);
-        return new ResponseData();
+        return ResponseData.newInstance();
     }
 
     @ResponseBody
     @RequestMapping(value = "/authSubmit", method = {RequestMethod.GET, RequestMethod.POST})
     public ResponseData authSubmit(@RequestParam Long userId, @RequestParam Long[] roleIds) {
         userService.assignRoles(userId, roleIds);
-        return new ResponseData();
+        return ResponseData.newInstance();
     }
 
 }

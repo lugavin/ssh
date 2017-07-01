@@ -45,7 +45,7 @@ public class RoleController {
     @RequestMapping(value = "/addSubmit", method = RequestMethod.POST)
     public ResponseData addSubmit(RoleDTO roleDTO) {
         roleService.add(roleDTO);
-        return new ResponseData();
+        return ResponseData.newInstance();
     }
 
     @ResponseBody
@@ -53,7 +53,7 @@ public class RoleController {
     @RequestMapping(value = "/editSubmit", method = {RequestMethod.POST})
     public ResponseData editSubmit(RoleDTO roleDTO) {
         roleService.update(roleDTO);
-        return new ResponseData();
+        return ResponseData.newInstance();
     }
 
     @ResponseBody
@@ -61,7 +61,7 @@ public class RoleController {
     @RequestMapping(value = "/deleteSubmit", method = {RequestMethod.POST})
     public ResponseData deleteSubmit(@RequestParam Long[] ids) {
         roleService.delete(ids);
-        return new ResponseData();
+        return ResponseData.newInstance();
     }
 
     @ResponseBody
@@ -83,7 +83,7 @@ public class RoleController {
     @RequestMapping(value = "/authSubmit", method = RequestMethod.POST)
     public ResponseData authSubmit(@RequestParam Long id, @RequestParam Long[] permissionIds) {
         roleService.assignPermissions(id, permissionIds);
-        return new ResponseData();
+        return ResponseData.newInstance();
     }
 
 }
