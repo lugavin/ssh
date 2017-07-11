@@ -38,7 +38,7 @@ public class ValidationAspect {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ValidationAspect.class);
 
-    private static final Map<Method, Method> methodCache = new ConcurrentHashMap<>();
+    private final Map<Method, Method> methodCache = new ConcurrentHashMap<>();
 
     private final ValidationProcessor validationProcessor;
 
@@ -54,7 +54,7 @@ public class ValidationAspect {
         this.validationProcessor = new ValidationProcessor(validator);
     }
 
-    @Pointcut("execution(* com.ssh.*.api.service.*Service.*(..))")
+    @Pointcut("execution(* com.ssh.*.service.*Service.*(..))")
     private void validatePointcut() {
     }
 
