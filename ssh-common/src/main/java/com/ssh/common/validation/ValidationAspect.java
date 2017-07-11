@@ -54,7 +54,7 @@ public class ValidationAspect {
         this.validationProcessor = new ValidationProcessor(validator);
     }
 
-    @Pointcut("execution(* com.ssh.*.service.*Service.*(..))")
+    @Pointcut("execution(* com.ssh.*.*.service.*Service.*(..))")
     private void validatePointcut() {
     }
 
