@@ -2,20 +2,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/aop
-       http://www.springframework.org/schema/aop/spring-aop.xsd
-       http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd">
-
-    <!--
-        Scans the classpath for annotated components that will be auto-registered as Spring beans.
-        By default, the Spring-provided @Component, @Repository, @Service, @Controller,
-        @RestController, @ControllerAdvice, and @Configuration stereotypes will be detected.
-    -->
-    <context:component-scan base-package="com.ssh.common"/>
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!--
     <bean class="org.springframework.aop.support.DefaultPointcutAdvisor">
@@ -48,6 +38,10 @@
                 <property name="cacheSeconds" value="120"/>
             </bean>
         </property>
+    </bean>
+
+    <bean class="com.ssh.common.validation.ValidationAspect">
+        <constructor-arg ref="validator"/>
     </bean>
 
     <!-- Enables the use of the @AspectJ style of Spring AOP. -->

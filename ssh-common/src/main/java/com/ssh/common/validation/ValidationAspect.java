@@ -8,23 +8,11 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
-import javax.validation.Constraint;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
+import javax.validation.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -46,7 +34,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * @see org.springframework.validation.beanvalidation.MethodValidationPostProcessor
  */
 @Aspect
-@Component
 public class ValidationAspect {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ValidationAspect.class);
@@ -59,7 +46,6 @@ public class ValidationAspect {
         this(Validation.buildDefaultValidatorFactory());
     }
 
-    @Inject
     public ValidationAspect(ValidatorFactory validatorFactory) {
         this(validatorFactory.getValidator());
     }
