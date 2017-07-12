@@ -12,7 +12,6 @@ import javax.validation.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 项目中, 常使用较多的是前端的JS校验, 前端校验的目的是为了提高合法用户的体验, 减轻服务器的压力;
@@ -36,8 +35,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ValidationAspect {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ValidationAspect.class);
-
-    private final Map<Method, Method> methodCache = new ConcurrentHashMap<>();
 
     private final ParameterNameDiscoverer parameterNameDiscoverer;
     private final ValidationProcessor validationProcessor;
@@ -68,16 +65,8 @@ public class ValidationAspect {
 
         LOGGER.info("invoke method [{}] with args {}", method, Arrays.toString(parameterValues));
 
-        Method targetMethod = methodCache.get(method);
-        if (targetMethod == null) {
-            targetMethod = findTargetInterfaceMethod(target, methodName, parameterTypes);
-            if (targetMethod == null) {
-                return;
-            }
-            methodCache.put(method, targetMethod);
-        }
-
-        if (!hasConstraintParameter(targetMethod)) {
+        Method targetMethod = findTargetInterfaceMethod(target, methodName, parameterTypes);
+        if (targetMethod == null || !hasConstraintParameter(targetMethod)) {
             return;
         }
 
