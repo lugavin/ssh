@@ -2,12 +2,11 @@ package com.ssh.common.validation;
 
 import com.ssh.common.exception.ValidationException;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
+import org.springframework.core.ParameterNameDiscoverer;
 
 import javax.validation.*;
 import java.lang.annotation.Annotation;
@@ -32,14 +31,15 @@ import java.util.concurrent.ConcurrentHashMap;
  * @see org.springframework.validation.beanvalidation.BeanValidationPostProcessor
  * @see org.springframework.validation.beanvalidation.MethodValidationInterceptor
  * @see org.springframework.validation.beanvalidation.MethodValidationPostProcessor
+ * @see org.springframework.core.LocalVariableTableParameterNameDiscoverer
  */
-@Aspect
 public class ValidationAspect {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ValidationAspect.class);
 
     private final Map<Method, Method> methodCache = new ConcurrentHashMap<>();
 
+    private final ParameterNameDiscoverer parameterNameDiscoverer;
     private final ValidationProcessor validationProcessor;
 
     public ValidationAspect() {
@@ -52,23 +52,21 @@ public class ValidationAspect {
 
     public ValidationAspect(Validator validator) {
         this.validationProcessor = new ValidationProcessor(validator);
+        this.parameterNameDiscoverer = new LocalVariableTableParameterNameDiscoverer();
     }
 
-    @Pointcut("execution(* com.ssh.*.*.service.*Service.*(..))")
-    private void validatePointcut() {
-    }
-
-    @Before("validatePointcut()")
     public void validate(JoinPoint joinPoint) throws Throwable {
 
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Object target = joinPoint.getTarget();
         Method method = methodSignature.getMethod();
         String methodName = method.getName();
+
         Class<?>[] parameterTypes = method.getParameterTypes();
+        String[] parameterNames = parameterNameDiscoverer.getParameterNames(method);
         Object[] parameterValues = joinPoint.getArgs();
 
-        LOGGER.debug("method " + method + " is called on " + target + " with args " + Arrays.toString(parameterValues));
+        LOGGER.info("invoke method [{}] with args {}", method, Arrays.toString(parameterValues));
 
         Method targetMethod = methodCache.get(method);
         if (targetMethod == null) {

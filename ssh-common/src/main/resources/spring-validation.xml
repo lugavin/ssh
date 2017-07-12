@@ -40,11 +40,18 @@
         </property>
     </bean>
 
-    <bean class="com.ssh.common.validation.ValidationAspect">
+    <bean id="validationAspect" class="com.ssh.common.validation.ValidationAspect">
         <constructor-arg ref="validator"/>
     </bean>
 
+    <aop:config proxy-target-class="true">
+        <aop:pointcut id="validationPointcut" expression="execution(* com.ssh.*.*.service.*Service.*(..))"/>
+        <aop:aspect ref="validationAspect">
+            <aop:before method="validate" pointcut-ref="validationPointcut"/>
+        </aop:aspect>
+    </aop:config>
+
     <!-- Enables the use of the @AspectJ style of Spring AOP. -->
-    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <!--<aop:aspectj-autoproxy proxy-target-class="true"/>-->
 
 </beans>
