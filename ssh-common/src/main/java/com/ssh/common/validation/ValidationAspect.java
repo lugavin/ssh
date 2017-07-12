@@ -2,6 +2,9 @@ package com.ssh.common.validation;
 
 import com.ssh.common.exception.ValidationException;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +35,7 @@ import java.util.*;
  * @see org.springframework.validation.beanvalidation.MethodValidationPostProcessor
  * @see org.springframework.core.LocalVariableTableParameterNameDiscoverer
  */
+@Aspect
 public class ValidationAspect {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ValidationAspect.class);
@@ -52,6 +56,11 @@ public class ValidationAspect {
         this.parameterNameDiscoverer = new LocalVariableTableParameterNameDiscoverer();
     }
 
+    @Pointcut("execution(* com.ssh.*.*.service.*Service.*(..))")
+    private void validatePointcut() {
+    }
+
+    @Before("validatePointcut()")
     public void validate(JoinPoint joinPoint) throws Throwable {
 
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
