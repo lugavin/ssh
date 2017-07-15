@@ -84,4 +84,29 @@
         <property name="rememberMeParam" value="rememberMe"/>
     </bean>
 
+    <!-- ============================== Enabling Shiro Annotations ============================== -->
+
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
+    <!--
+    Spring AOP uses either JDK dynamic proxies or CGLIB to create the proxy.
+    To force the use of CGLIB proxies set the value of the proxy-target-class attribute of the <aop:config> element to true.
+    To force CGLIB proxying when using the @AspectJ autoproxy support, set the proxy-target-class attribute of the <aop:aspectj-autoproxy> element to true.
+    -->
+    <!--<aop:config proxy-target-class="true"/>-->
+
+    <!--
+    Spring AOP的三种配置方式: (1)<aop:config/> (2)<aop:aspectj-autoproxy/> (3)DefaultAdvisorAutoProxyCreator
+    注意: 推荐使用前两种方式, Shiro和SpringMVC整合需要在SpringMVC配置文件中添加<aop:config/>配置才能使Shiro权限注解有效.
+    -->
+    <!--
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor">
+        <property name="proxyTargetClass" value="true"/>
+    </bean>
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+    -->
+
 </beans>

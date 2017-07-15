@@ -44,6 +44,11 @@
         <constructor-arg ref="validator"/>
     </bean>
 
+    <!--
+    Spring AOP uses either JDK dynamic proxies or CGLIB to create the proxy.
+    To force the use of CGLIB proxies set the value of the proxy-target-class attribute of the <aop:config> element to true.
+    To force CGLIB proxying when using the @AspectJ autoproxy support, set the proxy-target-class attribute of the <aop:aspectj-autoproxy> element to true.
+    -->
     <aop:config proxy-target-class="true">
         <aop:aspect ref="validationAspect" order="1">
             <aop:before method="validate" pointcut="execution(* com.ssh.*.*.service.*Service.*(..))"/>

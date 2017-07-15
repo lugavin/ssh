@@ -37,6 +37,7 @@
 
     <!-- Shiro(权限控制) -->
     <filter>
+        <!-- The filter-name matches name of a 'shiroFilter' bean inside applicationContext.xml -->
         <filter-name>shiroFilter</filter-name>
         <!-- DelegatingFilterProxy通过代理将Filter和Spring容器中的bean关联起来 -->
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -45,11 +46,13 @@
             <!-- 由Servlet容器来控制Filter的生命周期 -->
             <param-value>true</param-value>
         </init-param>
+        <!-- 配置与Spring容器对应的Filter的bean -->
+        <!--
         <init-param>
             <param-name>targetBeanName</param-name>
-            <!-- 配置与Spring容器对应的Filter的bean -->
             <param-value>shiroFilter</param-value>
         </init-param>
+        -->
     </filter>
     <filter-mapping>
         <filter-name>shiroFilter</filter-name>

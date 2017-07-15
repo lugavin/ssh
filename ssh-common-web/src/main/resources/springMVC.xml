@@ -23,6 +23,9 @@
     <mvc:default-servlet-handler/>
     <!--<mvc:resources location="/assets/" mapping="/assets/**" />-->
 
+    <!-- Enabling Shiro Annotations -->
+    <aop:config proxy-target-class="true"/>
+
     <!-- 配置视图解析器(物理视图=前缀+逻辑视图+后缀) -->
     <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
         <property name="templateEngine" ref="templateEngine"/>
@@ -117,18 +120,5 @@
             <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
-
-    <!-- ============================== Enabling Shiro Annotations ============================== -->
-
-    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
-        <property name="securityManager" ref="securityManager"/>
-    </bean>
-
-    <!--
-    Spring AOP uses either JDK dynamic proxies or CGLIB to create the proxy.
-    To force the use of CGLIB proxies set the value of the proxy-target-class attribute of the <aop:config> element to true.
-    To force CGLIB proxying when using the @AspectJ autoproxy support, set the proxy-target-class attribute of the <aop:aspectj-autoproxy> element to true.
-    -->
-    <aop:config proxy-target-class="true"/>
 
 </beans>
