@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 注意:Spring容器仅允许最多定义一个PropertyPlaceholderConfigurer或<context:property-placeholder/> -->
+    <!-- <context:property-placeholder location="classpath:jdbc.properties"/> -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:config/jdbc.properties</value>
+                <value>classpath:config/cas.properties</value>
+            </list>
+        </property>
+    </bean>
+
+</beans>

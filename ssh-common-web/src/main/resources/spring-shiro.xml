@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/aop
-       http://www.springframework.org/schema/aop/spring-aop.xsd">
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!--配置与web.xml中对应的Filter的bean-->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
@@ -86,23 +83,5 @@
         <property name="tokenParam" value="token"/>
         <property name="rememberMeParam" value="rememberMe"/>
     </bean>
-
-    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
-        <property name="securityManager" ref="securityManager"/>
-    </bean>
-
-    <!--
-    In both standalone and web applications, you might want to use Shiro's Annotations for security checks. For example, @RequiresRoles, @RequiresPermissions, etc.
-    This requires Shiro's Spring AOP integration to scan for the appropriate annotated classes and perform security logic as necessary.
-    See <a>http://shiro.apache.org/spring.html</a> for more details.
-    -->
-    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
-          depends-on="lifecycleBeanPostProcessor">
-        <property name="proxyTargetClass" value="true"/>
-    </bean>
-
-    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
-
-    <aop:aspectj-autoproxy proxy-target-class="true"/>
 
 </beans>

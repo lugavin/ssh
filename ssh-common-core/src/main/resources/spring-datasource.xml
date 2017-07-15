@@ -7,11 +7,7 @@
        http://www.springframework.org/schema/jee
        http://www.springframework.org/schema/jee/spring-jee.xsd">
 
-    <!-- 注意:Spring容器仅允许最多定义一个PropertyPlaceholderConfigurer或<context:property-placeholder/> -->
-    <!-- <context:property-placeholder location="classpath:jdbc.properties"/> -->
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations" value="classpath:jdbc.properties"/>
-    </bean>
+    <import resource="classpath:spring-config.xml"/>
 
     <beans profile="dev">
         <bean id="dataSource" class="com.ssh.common.core.datasource.DruidDataSource" destroy-method="close">

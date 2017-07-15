@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd
-       http://www.springframework.org/schema/aop
-       http://www.springframework.org/schema/aop/spring-aop.xsd">
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!-- 注意:Spring容器仅允许最多定义一个<context:property-placeholder />(或PropertyPlaceholderConfigurer) -->
-    <context:property-placeholder location="classpath:cas.properties"/>
+    <import resource="classpath:spring-config.xml"/>
 
     <!--配置与web.xml中对应的Filter的bean-->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
@@ -24,19 +17,6 @@
                 <entry key="cas" value-ref="casFilter"/>
             </map>
         </property>
-        <property name="filterChainDefinitionMap">
-            <map>
-                <entry key="/cas" value="cas"/>
-                <entry key="/favicon.ico" value="anon"/>
-                <entry key="/assets/**" value="anon"/>
-                <entry key="/captcha/**" value="anon"/>
-                <entry key="/error/**" value="anon"/>
-                <entry key="/security/logout" value="logout"/>
-                <entry key="/portal/**" value="user"/>
-                <entry key="/**" value="user"/>
-            </map>
-        </property>
-        <!--
         <property name="filterChainDefinitions">
             <value>
                 /cas=cas
@@ -49,7 +29,6 @@
                 /**=user
             </value>
         </property>
-        -->
     </bean>
 
     <bean id="logout" class="org.apache.shiro.web.filter.authc.LogoutFilter">
@@ -104,18 +83,5 @@
         <property name="maxAge" value="2592000"/>
         <property name="httpOnly" value="true"/>
     </bean>
-
-    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
-        <property name="securityManager" ref="securityManager"/>
-    </bean>
-
-    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
-          depends-on="lifecycleBeanPostProcessor">
-        <property name="proxyTargetClass" value="true"/>
-    </bean>
-
-    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
-
-    <aop:aspectj-autoproxy proxy-target-class="true"/>
 
 </beans>

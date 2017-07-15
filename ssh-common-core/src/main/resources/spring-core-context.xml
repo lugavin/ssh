@@ -15,9 +15,7 @@
 
     <context:component-scan base-package="com.ssh.common.core"/>
 
-    <!--
-    <a href="https://docs.spring.io/spring-data/jpa/docs/1.6.0.RELEASE/reference/html/jpa.repositories.html">JPA</a>
-    -->
+    <!-- <a href="https://docs.spring.io/spring-data/jpa/docs/1.6.0.RELEASE/reference/html/jpa.repositories.html">JPA</a> -->
     <!--
     <jpa:repositories entity-manager-factory-ref="entityManagerFactory"
                       transaction-manager-ref="transactionManager"
@@ -136,8 +134,5 @@
         <property name="basePackage" value="com.ssh.*.core.repository"/>
         <property name="annotationClass" value="com.ssh.common.core.annotation.RepositoryBean"/>
     </bean>
-
-    <!-- @AspectJ Support -->
-    <aop:aspectj-autoproxy proxy-target-class="true"/>
 
 </beans>
