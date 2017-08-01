@@ -37,7 +37,6 @@
         <dubbo.version>2.5.3</dubbo.version>
         <druid.version>1.0.18</druid.version>
         <jackson.version>2.7.4</jackson.version>
-        <fastjson.version>1.2.7</fastjson.version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <sitemesh.version>3.0.1</sitemesh.version>
         <thymeleaf.version>3.0.2.RELEASE</thymeleaf.version>
@@ -375,12 +374,6 @@
                 <groupId>com.fasterxml.jackson.module</groupId>
                 <artifactId>jackson-module-jaxb-annotations</artifactId>
                 <version>${jackson.version}</version>
-            </dependency>
-            <!-- FastJson -->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>${fastjson.version}</version>
             </dependency>
 
             <!-- JavaEE Specification API -->
