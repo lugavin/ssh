@@ -1,6 +1,6 @@
 package com.ssh.sys.core.service;
 
-import com.ssh.common.dto.ModelMapDTO;
+import com.ssh.common.dto.MapDTO;
 import com.ssh.common.exception.BusinessException;
 import com.ssh.common.util.BeanMapper;
 import com.ssh.sys.api.dto.RoleDTO;
@@ -104,8 +104,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Map> getList(ModelMapDTO modelMapDTO) {
-        return roleRepository.getRoleListSelective(modelMapDTO);
+    public List<Map> getList(MapDTO mapDTO) {
+        return roleRepository.getRoleListSelective(mapDTO);
     }
 
     @Override

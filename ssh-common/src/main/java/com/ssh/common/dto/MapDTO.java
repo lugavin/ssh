@@ -3,27 +3,27 @@ package com.ssh.common.dto;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class ModelMapDTO extends LinkedHashMap<String, Object> implements DTO {
+public class MapDTO extends LinkedHashMap<String, Object> implements DTO {
 
     private static final long serialVersionUID = 20160523L;
 
     /**
-     * Construct a new, empty {@code ModelMapDTO}.
+     * Construct a new, empty {@code MapDTO}.
      */
-    public ModelMapDTO() {
+    public MapDTO() {
     }
 
     /**
-     * Construct a new {@code ModelMapDTO} containing the supplied attribute
+     * Construct a new {@code MapDTO} containing the supplied attribute
      * under the supplied name.
      *
      * @see #addAttribute(String, Object)
      */
-    public ModelMapDTO(String attributeName, Object attributeValue) {
+    public MapDTO(String attributeName, Object attributeValue) {
         addAttribute(attributeName, attributeValue);
     }
 
-    public ModelMapDTO(Map<String, ?> attributes) {
+    public MapDTO(Map<String, ?> attributes) {
         addAllAttributes(attributes);
     }
 
@@ -34,7 +34,7 @@ public class ModelMapDTO extends LinkedHashMap<String, Object> implements DTO {
      * @param attributeName  the name of the model attribute (never {@code null})
      * @param attributeValue the model attribute value (can be {@code null})
      */
-    public ModelMapDTO addAttribute(String attributeName, Object attributeValue) {
+    public MapDTO addAttribute(String attributeName, Object attributeValue) {
         if (attributeName == null) {
             throw new IllegalArgumentException("Model attribute name must not be null");
         }
@@ -47,7 +47,7 @@ public class ModelMapDTO extends LinkedHashMap<String, Object> implements DTO {
      *
      * @see #addAttribute(String, Object)
      */
-    public ModelMapDTO addAllAttributes(Map<String, ?> attributes) {
+    public MapDTO addAllAttributes(Map<String, ?> attributes) {
         if (attributes != null) {
             putAll(attributes);
         }
@@ -59,7 +59,7 @@ public class ModelMapDTO extends LinkedHashMap<String, Object> implements DTO {
      * with existing objects of the same name taking precedence (i.e. not getting
      * replaced).
      */
-    public ModelMapDTO mergeAttributes(Map<String, ?> attributes) {
+    public MapDTO mergeAttributes(Map<String, ?> attributes) {
         if (attributes != null) {
             for (Map.Entry<String, ?> entry : attributes.entrySet()) {
                 String key = entry.getKey();

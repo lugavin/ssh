@@ -1,6 +1,6 @@
 package com.ssh.sys.core.transform;
 
-import com.ssh.common.dto.ModelMapDTO;
+import com.ssh.common.dto.MapDTO;
 import com.ssh.common.util.BeanMapper;
 import com.ssh.sys.api.dto.UserDTO;
 import com.ssh.sys.core.entity.UserEntity;
@@ -44,14 +44,14 @@ public class TransformTest {
         UserDTO dto = new UserDTO();
         dto.setId(1001L);
         dto.setName("King");
-        ModelMapDTO map = new ModelMapDTO();
+        MapDTO map = new MapDTO();
         BeanMapper.map(dto, map);
         LOGGER.debug("Bean --> Map : {}", map);
     }
 
     @Test
     public void test2MapToBean() throws Exception {
-        ModelMapDTO map = new ModelMapDTO();
+        MapDTO map = new MapDTO();
         map.put("id", 1001L);
         map.put("name", "King");
         map.put("createDate", Calendar.getInstance().getTime());

@@ -1,6 +1,6 @@
 package com.ssh.sys.core.repository;
 
-import com.ssh.common.dto.ModelMapDTO;
+import com.ssh.common.dto.MapDTO;
 import com.ssh.common.page.Page;
 import com.ssh.common.page.PageRequest;
 import com.ssh.common.util.Constant;
@@ -44,7 +44,7 @@ public class AuditLogRepositoryTest {
 
     @Test
     public void test1QueryForList() throws Exception {
-        List<Map> auditLogList = auditLogRepository.getListSelective(new ModelMapDTO());
+        List<Map> auditLogList = auditLogRepository.getListSelective(new MapDTO());
         LOGGER.info("=== {} ===", auditLogList);
         List<Map> auditDetailList = auditLogRepository.getDetailListAuditLogId(1L);
         LOGGER.info("=== {} ===", auditDetailList);
@@ -52,7 +52,7 @@ public class AuditLogRepositoryTest {
 
     @Test
     public void test2QueryForPage() throws Exception {
-        Page<Map> page = auditLogRepository.getPageSelective(new PageRequest(new ModelMapDTO(), 0, 10));
+        Page<Map> page = auditLogRepository.getPageSelective(new PageRequest(new MapDTO(), 0, 10));
         LOGGER.info("=== {} ===", page.getRecords());
     }
 

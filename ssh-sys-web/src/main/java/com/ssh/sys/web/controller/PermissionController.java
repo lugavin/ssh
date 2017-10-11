@@ -1,6 +1,6 @@
 package com.ssh.sys.web.controller;
 
-import com.ssh.common.dto.ModelMapDTO;
+import com.ssh.common.dto.MapDTO;
 import com.ssh.common.web.base.ResponseData;
 import com.ssh.sys.api.dto.PermissionDTO;
 import com.ssh.sys.api.service.PermissionService;
@@ -30,7 +30,7 @@ public class PermissionController {
     @RequiresPermissions("permission:query")
     @RequestMapping(value = "/getList", method = {RequestMethod.POST})
     public List<Map> getList(Map<String, String> params) {
-        return permissionService.getList(new ModelMapDTO(params));
+        return permissionService.getList(new MapDTO(params));
     }
 
     @RequiresPermissions("permission:create")

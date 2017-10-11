@@ -1,6 +1,6 @@
 package com.ssh.sys.web.controller;
 
-import com.ssh.common.dto.ModelMapDTO;
+import com.ssh.common.dto.MapDTO;
 import com.ssh.common.page.Page;
 import com.ssh.common.web.datatable.DataTableRequest;
 import com.ssh.common.web.datatable.DataTableResponse;
@@ -35,7 +35,7 @@ public class AuditController {
     @ResponseBody
     @RequiresPermissions("audit:query")
     @RequestMapping(value = "/getList", method = {RequestMethod.POST})
-    public DataTableResponse<Map> getList(@RequestBody BaseWrapper<ModelMapDTO> wrapper) {
+    public DataTableResponse<Map> getList(@RequestBody BaseWrapper<MapDTO> wrapper) {
         DataTableRequest dtArgs = wrapper.getDtArgs();
         Page<Map> page = auditService.getPage(wrapper.getDto(), dtArgs.getStart(), dtArgs.getLength());
         return DataTableUtility.buildDataTable(dtArgs, page);

@@ -1,6 +1,6 @@
 package com.ssh.sys.core.service;
 
-import com.ssh.common.dto.ModelMapDTO;
+import com.ssh.common.dto.MapDTO;
 import com.ssh.common.exception.BusinessException;
 import com.ssh.common.page.Page;
 import com.ssh.common.page.PageRequest;
@@ -131,13 +131,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Map> getList(ModelMapDTO modelMapDTO) {
-        return userRepository.getUserListSelective(modelMapDTO);
+    public List<Map> getList(MapDTO mapDTO) {
+        return userRepository.getUserListSelective(mapDTO);
     }
 
     @Override
-    public Page<Map> getPage(ModelMapDTO modelMapDTO, int offset, int limit) {
-        return userRepository.getUserPageSelective(PageRequest.newInstance(modelMapDTO, offset, limit));
+    public Page<Map> getPage(MapDTO mapDTO, int offset, int limit) {
+        return userRepository.getUserPageSelective(PageRequest.newInstance(mapDTO, offset, limit));
     }
 
     private UserEntity map(UserDTO userDTO) {

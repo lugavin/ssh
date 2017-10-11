@@ -1,6 +1,6 @@
 package com.ssh.sys.web.controller;
 
-import com.ssh.common.dto.ModelMapDTO;
+import com.ssh.common.dto.MapDTO;
 import com.ssh.common.web.base.ResponseData;
 import com.ssh.sys.api.dto.RoleDTO;
 import com.ssh.sys.api.service.PermissionService;
@@ -37,7 +37,7 @@ public class RoleController {
     @RequiresPermissions("role:query")
     @RequestMapping(value = "/getList", method = {RequestMethod.POST})
     public List<Map> getList(@RequestParam Map<String, String> params) {
-        return roleService.getList(new ModelMapDTO(params));
+        return roleService.getList(new MapDTO(params));
     }
 
     @ResponseBody
@@ -75,7 +75,7 @@ public class RoleController {
     public ModelMap getPermissionList(@RequestParam Long id) {
         ModelMap modelMap = new ModelMap();
         modelMap.put("permissionIds", roleService.getPermissionIds(id));
-        modelMap.put("permissionList", permissionService.getList(new ModelMapDTO()));
+        modelMap.put("permissionList", permissionService.getList(new MapDTO()));
         return modelMap;
     }
 

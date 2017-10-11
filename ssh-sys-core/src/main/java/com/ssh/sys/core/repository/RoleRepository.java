@@ -4,7 +4,7 @@ import com.ssh.common.core.annotation.Param;
 import com.ssh.common.core.annotation.Query;
 import com.ssh.common.core.annotation.RepositoryBean;
 import com.ssh.common.core.repository.CrudRepository;
-import com.ssh.common.dto.ModelMapDTO;
+import com.ssh.common.dto.MapDTO;
 import com.ssh.sys.api.dto.RoleDTO;
 import com.ssh.sys.core.entity.RoleEntity;
 
@@ -24,7 +24,7 @@ public interface RoleRepository extends CrudRepository<RoleEntity, Long> {
     List<Map> getRoleListSelective(RoleDTO roleDTO);
 
     @Query(transformer = Map.class)
-    List<Map> getRoleListSelective(ModelMapDTO modelMapDTO);
+    List<Map> getRoleListSelective(MapDTO mapDTO);
 
     @Query(transformer = Map.class)
     List<Map> getRoleListByUserId(@Param("userId") Long userId);

@@ -1,6 +1,6 @@
 package com.ssh.sys.web.controller;
 
-import com.ssh.common.dto.ModelMapDTO;
+import com.ssh.common.dto.MapDTO;
 import com.ssh.common.page.Page;
 import com.ssh.sys.api.service.Select2Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class Select2Controller {
     public Page<Map> getActorPage(@RequestParam Map<String, String> params,
                                   @RequestParam(defaultValue = "1") Integer page,
                                   @RequestParam(defaultValue = "10") Integer limit) {
-        return select2Service.getActorPage(new ModelMapDTO(params), (page - 1) * limit, limit);
+        return select2Service.getActorPage(new MapDTO(params), (page - 1) * limit, limit);
     }
 
     @ResponseBody
@@ -33,13 +33,13 @@ public class Select2Controller {
     public Page<Map> getFuncPage(@RequestParam Map<String, String> params,
                                  @RequestParam(defaultValue = "1") Integer page,
                                  @RequestParam(defaultValue = "10") Integer limit) {
-        return select2Service.getFuncPage(new ModelMapDTO(params), (page - 1) * limit, limit);
+        return select2Service.getFuncPage(new MapDTO(params), (page - 1) * limit, limit);
     }
 
     @ResponseBody
     @RequestMapping(value = "/getRoleList", method = RequestMethod.POST)
     public List<Map> getRoleList(@RequestParam Map<String, String> params) {
-        return select2Service.getRoleList(new ModelMapDTO(params));
+        return select2Service.getRoleList(new MapDTO(params));
     }
 
 }

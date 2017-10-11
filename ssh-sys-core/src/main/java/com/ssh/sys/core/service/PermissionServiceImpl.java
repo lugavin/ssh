@@ -1,6 +1,6 @@
 package com.ssh.sys.core.service;
 
-import com.ssh.common.dto.ModelMapDTO;
+import com.ssh.common.dto.MapDTO;
 import com.ssh.common.exception.BusinessException;
 import com.ssh.common.util.BeanMapper;
 import com.ssh.common.util.Constant;
@@ -141,8 +141,8 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public List<Map> getList(ModelMapDTO modelMapDTO) {
-        return permissionRepository.getListSelective(modelMapDTO);
+    public List<Map> getList(MapDTO mapDTO) {
+        return permissionRepository.getListSelective(mapDTO);
     }
 
 }

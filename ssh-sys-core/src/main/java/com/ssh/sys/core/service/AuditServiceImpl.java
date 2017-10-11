@@ -1,6 +1,6 @@
 package com.ssh.sys.core.service;
 
-import com.ssh.common.dto.ModelMapDTO;
+import com.ssh.common.dto.MapDTO;
 import com.ssh.common.page.Page;
 import com.ssh.common.page.PageRequest;
 import com.ssh.sys.api.service.AuditService;
@@ -20,8 +20,8 @@ public class AuditServiceImpl implements AuditService {
     private AuditLogRepository auditLogRepository;
 
     @Override
-    public List<Map> getList(ModelMapDTO modelMapDTO) {
-        return auditLogRepository.getListSelective(modelMapDTO);
+    public List<Map> getList(MapDTO mapDTO) {
+        return auditLogRepository.getListSelective(mapDTO);
     }
 
     @Override
@@ -30,8 +30,8 @@ public class AuditServiceImpl implements AuditService {
     }
 
     @Override
-    public Page<Map> getPage(ModelMapDTO modelMapDTO, int offset, int limit) {
-        return auditLogRepository.getPageSelective(PageRequest.newInstance(modelMapDTO, offset, limit));
+    public Page<Map> getPage(MapDTO mapDTO, int offset, int limit) {
+        return auditLogRepository.getPageSelective(PageRequest.newInstance(mapDTO, offset, limit));
     }
 
 }

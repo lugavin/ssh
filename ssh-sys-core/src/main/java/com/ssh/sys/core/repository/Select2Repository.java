@@ -2,7 +2,7 @@ package com.ssh.sys.core.repository;
 
 import com.ssh.common.core.annotation.Query;
 import com.ssh.common.core.annotation.RepositoryBean;
-import com.ssh.common.dto.ModelMapDTO;
+import com.ssh.common.dto.MapDTO;
 import com.ssh.common.page.Page;
 import com.ssh.common.page.Pageable;
 
@@ -13,13 +13,13 @@ import java.util.Map;
 public interface Select2Repository {
 
     @Query(transformer = Map.class)
-    List<Map> getActorListSelective(ModelMapDTO modelMapDTO);
+    List<Map> getActorListSelective(MapDTO mapDTO);
 
     @Query(transformer = Map.class)
-    List<Map> getFuncListSelective(ModelMapDTO modelMapDTO);
+    List<Map> getFuncListSelective(MapDTO mapDTO);
 
     @Query(transformer = Map.class)
-    List<Map> getRoleListSelective(ModelMapDTO modelMapDTO);
+    List<Map> getRoleListSelective(MapDTO mapDTO);
 
     @Query(value = "getActorListSelective", transformer = Map.class)
     Page<Map> getActorPageSelective(Pageable pageable);

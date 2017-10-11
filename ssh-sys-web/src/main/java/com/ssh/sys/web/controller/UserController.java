@@ -1,6 +1,6 @@
 package com.ssh.sys.web.controller;
 
-import com.ssh.common.dto.ModelMapDTO;
+import com.ssh.common.dto.MapDTO;
 import com.ssh.common.page.Page;
 import com.ssh.common.util.Constant;
 import com.ssh.common.web.base.ResponseData;
@@ -62,7 +62,7 @@ public class UserController {
     @ResponseBody
     @RequiresPermissions("user:query")
     @RequestMapping(value = "/getList", method = {RequestMethod.POST})
-    public DataTableResponse<Map> getList(@RequestBody BaseWrapper<ModelMapDTO> wrapper) {
+    public DataTableResponse<Map> getList(@RequestBody BaseWrapper<MapDTO> wrapper) {
         DataTableRequest dtArgs = wrapper.getDtArgs();
         Page<Map> page = userService.getPage(wrapper.getDto(), dtArgs.getStart(), dtArgs.getLength());
         return DataTableUtility.buildDataTable(dtArgs, page);

@@ -1,6 +1,6 @@
 package com.ssh.sys.core.service;
 
-import com.ssh.common.dto.ModelMapDTO;
+import com.ssh.common.dto.MapDTO;
 import com.ssh.common.util.Constant;
 import com.ssh.sys.api.service.AuditService;
 import org.apache.commons.lang3.time.DateUtils;
@@ -44,7 +44,7 @@ public class AuditServiceTest {
 
     @Test
     public void test1GetList() throws Exception {
-        ModelMapDTO dto = new ModelMapDTO();
+        MapDTO dto = new MapDTO();
         dto.put("actionStartTime", "2016-07-30");
         dto.put("actionEndTime", "2016-07-30");
         List<Map> list = auditService.getList(dto);
