@@ -3,7 +3,7 @@ package com.ssh.sys.core.repository;
 import com.ssh.common.core.annotation.Param;
 import com.ssh.common.core.annotation.Query;
 import com.ssh.common.core.annotation.RepositoryBean;
-import com.ssh.common.dto.MapDTO;
+import com.ssh.common.dto.ModelMapDTO;
 import com.ssh.common.page.Page;
 import com.ssh.common.page.Pageable;
 
@@ -14,7 +14,7 @@ import java.util.Map;
 public interface AuditLogRepository {
 
     @Query(transformer = Map.class)
-    List<Map> getListSelective(MapDTO mapDTO);
+    List<Map> getListSelective(ModelMapDTO modelMapDTO);
 
     @Query(value = "getListSelective", transformer = Map.class)
     Page<Map> getPageSelective(Pageable pageable);

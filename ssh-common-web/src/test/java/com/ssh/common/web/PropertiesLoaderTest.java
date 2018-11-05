@@ -26,7 +26,7 @@ public class PropertiesLoaderTest {
 
     @Test
     public void testGetValue() throws Exception {
-        String company = PropertiesLoader.getValue(PropertiesLoader.Config.COMPANY);
+        String company = PropertiesLoader.getValue(PropertiesLoader.Config.COMPANY_NAME);
         Boolean useCaptcha = PropertiesLoader.getBoolean(PropertiesLoader.Config.USE_CAPTCHA);
         Integer pageSize = PropertiesLoader.getInteger(PropertiesLoader.Config.PAGE_SIZE);
         Assert.hasText(company);

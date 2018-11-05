@@ -1,31 +1,26 @@
-define([
-    'jquery'
-], function ($) {
+define(function (require, exports, module) {
 
-    $.fn.extend({
-        serializeObject: function () {
-            var result = {};
-            $.each(this.serializeArray(), function (i, element) {
-                var node = result[element.name];
-                // If node with same name exists already, need to convert it to an array as it
-                // is a multi-value field (i.e., checkboxes)
-                if (typeof node !== 'undefined' && node !== null) {
-                    if ($.isArray(node)) {
-                        node.push(element.value);
-                    } else {
-                        result[element.name] = [node, element.value];
-                    }
-                } else {
-                    result[element.name] = element.value;
+    var jQuery = require('jquery');
+
+    jQuery.fn.serializeObject = function () {
+        var obj = {};
+        var arr = this.serializeArray();
+        jQuery.each(arr, function () {
+            if (obj[this.name]) {
+                if (!obj[this.name].push) {
+                    obj[this.name] = [obj[this.name]];
                 }
-            });
-            return result;
-        }
-    });
+                obj[this.name].push(this.value || '');
+            } else {
+                obj[this.name] = this.value || '';
+            }
+        });
+        return obj;
+    };
 
-    $('form').keypress(function (event) {
+    jQuery('form').keypress(function (event) {
         if (event.keyCode === 13) {
-            var $this = $(this);
+            var $this = jQuery(this);
             if ($this.find('[type="submit"]').length > 0) {
                 return true;
             } else {
@@ -36,6 +31,6 @@ define([
         }
     });
 
-    return $;
+    return jQuery;
 
 });

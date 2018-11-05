@@ -1,6 +1,6 @@
 package com.ssh.sys.core.service;
 
-import com.ssh.common.dto.MapDTO;
+import com.ssh.common.dto.ModelMapDTO;
 import com.ssh.common.exception.BusinessException;
 import com.ssh.common.page.Page;
 import com.ssh.common.page.PageRequest;
@@ -18,11 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Transactional
 @Service(UserService.BEAN_NAME)
@@ -131,13 +127,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Map> getList(MapDTO mapDTO) {
-        return userRepository.getUserListSelective(mapDTO);
+    public List<Map> getList(ModelMapDTO modelMapDTO) {
+        return userRepository.getUserListSelective(modelMapDTO);
     }
 
     @Override
-    public Page<Map> getPage(MapDTO mapDTO, int offset, int limit) {
-        return userRepository.getUserPageSelective(PageRequest.newInstance(mapDTO, offset, limit));
+    public Page<Map> getPage(ModelMapDTO modelMapDTO, int offset, int limit) {
+        return userRepository.getUserPageSelective(PageRequest.newInstance(modelMapDTO, offset, limit));
     }
 
     private UserEntity map(UserDTO userDTO) {

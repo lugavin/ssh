@@ -1,0 +1,55 @@
+@CHARSET "UTF-8";
+
+body {
+    margin: 0;
+    font-family: Verdana, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 18px;
+    color: #333333;
+    background-color: #ffffff;
+}
+
+/*
+.form-horizontal .form-group {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+.row {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+*/
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-group label[class*="col-"] {
+    padding-top: 5px;
+    padding-right: 0 !important;
+    margin-bottom: 5px;
+}
+
+.control-label.control-label-required:before {
+    content: "*";
+    color: red;
+    font-size: 12px;
+    position: relative;
+    /*top: 2px;
+    right: 2px;*/
+}
+
+.fa-arrow {
+    float: right !important;
+}
+
+.fa-arrow:before {
+    content: "\f103";
+}
+
+a.collapsed .fa-arrow:before {
+    content: "\f102";
+}

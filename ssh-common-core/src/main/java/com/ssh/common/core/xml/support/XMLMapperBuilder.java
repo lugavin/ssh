@@ -14,11 +14,7 @@ import org.xml.sax.EntityResolver;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 动态 HQL/SQL 组装器

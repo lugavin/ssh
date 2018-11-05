@@ -61,7 +61,11 @@ define(function () {
             }
         }
     };
-    for (var key in methods) {
-        Math[key] = methods[key];
-    }
+
+    Math.add = methods['add'];
+    Math.subtract = methods['subtract'];
+    Math.multiply = methods['multiply'];
+    Math.divide = methods['divide'];
+
+    return methods;
 });

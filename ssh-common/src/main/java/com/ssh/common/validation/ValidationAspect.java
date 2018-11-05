@@ -1,89 +1,84 @@
 package com.ssh.common.validation;
 
-import com.ssh.common.exception.ValidationException;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
-import org.springframework.core.ParameterNameDiscoverer;
+import org.springframework.stereotype.Component;
 
+import javax.inject.Inject;
 import javax.validation.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * Service接口方法參數校驗攔截器:
  * 项目中, 常使用较多的是前端的JS校验, 前端校验的目的是为了提高合法用户的体验, 减轻服务器的压力;
  * 服务端校验则是为了防止一些非法用户绕开前端的JS校验对系统进行访问, 服务端校验主要集中在Controller和Service层;
  * Controller层负责校验页面请求参数的合法性(防止非法用户绕开前端的JS校验对系统进行访问),
  * Service层负责校验关键业务参数(仅限于Service接口中使用的参数),
- * DAO层一般不对参数进行校验(参数不合法直接抛出数据库异常).
- * <p/>
- * Description: Service接口方法參數校驗攔截器
- * Author: Gavin
- * Date: Nov 19, 2016 9:30:00 PM
- * Version: 1.0
+ * 而DAO层一般不对参数进行校验(参数不合法直接抛出数据库异常).
  *
- * @see org.springframework.core.MethodParameter
- * @see org.springframework.core.annotation.AnnotationUtils
+ * @author Gavin
+ * @version 1.0
+ * @see com.alibaba.dubbo.validation.support.jvalidation.JValidator
  * @see org.springframework.validation.beanvalidation.BeanValidationPostProcessor
  * @see org.springframework.validation.beanvalidation.MethodValidationInterceptor
  * @see org.springframework.validation.beanvalidation.MethodValidationPostProcessor
- * @see org.springframework.core.LocalVariableTableParameterNameDiscoverer
  */
+@Aspect
+@Component
 public class ValidationAspect {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ValidationAspect.class);
 
-    private final Map<Method, Method> methodCache = new ConcurrentHashMap<>();
-
-    private final ParameterNameDiscoverer parameterNameDiscoverer;
     private final ValidationProcessor validationProcessor;
 
     public ValidationAspect() {
         this(Validation.buildDefaultValidatorFactory());
     }
 
+    @Inject
     public ValidationAspect(ValidatorFactory validatorFactory) {
         this(validatorFactory.getValidator());
     }
 
     public ValidationAspect(Validator validator) {
         this.validationProcessor = new ValidationProcessor(validator);
-        this.parameterNameDiscoverer = new LocalVariableTableParameterNameDiscoverer();
     }
 
-    public void validate(JoinPoint joinPoint) throws Throwable {
+    // @Pointcut(value = "execution(* com.ssh.*.api.service.*Service.*(..)) && @args(..)")
+    // @Pointcut(value = "execution(* com.ssh.*.api.service.*Service.*(java.lang.String)) && args(param)", argNames = "param")
+    // private void beforePointcut(String param) {}
+    //
+    // @AfterReturning(value = "beforePointcut(param)", argNames = "joinPoint,param,returnValue", returning = "returnValue")
+    // public void invoke(JoinPoint joinPoint, String param, Object returnValue) throws Throwable {}
 
+    @Pointcut("execution(* com.ssh.*.api.service.*Service.*(..))")
+    private void validatePointcut() {
+    }
+
+    @Before("validatePointcut()")
+    public void validate(JoinPoint joinPoint) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Object target = joinPoint.getTarget();
         Method method = methodSignature.getMethod();
         String methodName = method.getName();
-
         Class<?>[] parameterTypes = method.getParameterTypes();
-        String[] parameterNames = parameterNameDiscoverer.getParameterNames(method);
         Object[] parameterValues = joinPoint.getArgs();
 
-        LOGGER.info("invoke method [{}] with args {}", method, Arrays.toString(parameterValues));
+        // LOGGER.info("Target Object => {}", joinPoint.getTarget().getClass().getName());
+        // LOGGER.info("Proxy Object => {}", joinPoint.getThis().getClass().getName());
+        LOGGER.debug("Invoke service method => {}.{}()", target.getClass().getName(), method.getName());
 
-        Method targetMethod = methodCache.get(method);
-        if (targetMethod == null) {
-            targetMethod = findTargetInterfaceMethod(target, methodName, parameterTypes);
-            if (targetMethod == null) {
-                return;
-            }
-            methodCache.put(method, targetMethod);
-        }
-        if (!hasConstraintParameter(targetMethod)) {
+        Method targetMethod = findTargetInterfaceMethod(target, methodName, parameterTypes);
+        if (targetMethod == null || !hasConstraintParameter(targetMethod)) {
             return;
         }
-
-        // Method targetMethod = findTargetInterfaceMethod(target, methodName, parameterTypes);
-        // if (targetMethod == null || !hasConstraintParameter(targetMethod)) {
-        //     return;
-        // }
 
         // (1)校验方法入参
         List<String> violations = validationProcessor.validateParameters(target, targetMethod, parameterValues);
@@ -178,9 +173,9 @@ public class ValidationAspect {
     }
 
     @SuppressWarnings("unchecked")
-    private <T extends Annotation> T getMethodGroupAnnotation(Method method, int parameterIndex, Class<T> annotationType) {
+    private <T extends Annotation> T getMethodGroupAnnotation(Method method, int paramIndex, Class<T> annotationType) {
         Annotation[][] parameterAnnotations = method.getParameterAnnotations();
-        Annotation[] annotations = parameterAnnotations[parameterIndex];
+        Annotation[] annotations = parameterAnnotations[paramIndex];
         for (Annotation annotation : annotations) {
             if (annotationType.isInstance(annotation)) {
                 return (T) annotation;
@@ -189,7 +184,7 @@ public class ValidationAspect {
         return null;
     }
 
-    static class ValidationProcessor {
+    public static class ValidationProcessor {
 
         private final Validator validator;
 

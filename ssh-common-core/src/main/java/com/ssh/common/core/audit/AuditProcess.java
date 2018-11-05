@@ -1,9 +1,9 @@
 package com.ssh.common.core.audit;
 
+import com.ssh.common.context.AuditContext;
 import com.ssh.common.core.entity.AuditColumnEntity;
 import com.ssh.common.core.entity.AuditLogEntity;
 import com.ssh.common.core.entity.AuditTableEntity;
-import com.ssh.common.audit.AuditContext;
 import com.ssh.common.util.JaxbMapper;
 import org.hibernate.FlushMode;
 import org.hibernate.Session;

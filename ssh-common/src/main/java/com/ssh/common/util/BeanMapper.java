@@ -1,6 +1,7 @@
 package com.ssh.common.util;
 
-import org.springframework.beans.BeanUtils;
+import org.dozer.DozerBeanMapper;
+import org.dozer.Mapper;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,20 +10,20 @@ import java.util.List;
 
 public abstract class BeanMapper {
 
+    private static final Mapper mapper = new DozerBeanMapper();
+
     public static void map(final Object source, final Object destination) {
         if (source == null) {
             return;
         }
-        BeanUtils.copyProperties(source, destination);
+        mapper.map(source, destination);
     }
 
     public static <T> T map(final Object source, final Class<T> destinationClass) {
         if (source == null) {
             return null;
         }
-        T destination = BeanUtils.instantiate(destinationClass);
-        BeanUtils.copyProperties(source, destination);
-        return destination;
+        return mapper.map(source, destinationClass);
     }
 
     public static <E, T> List<T> map(final Collection<E> sourceList, final Class<T> destinationClass) {
@@ -31,9 +32,7 @@ public abstract class BeanMapper {
         }
         List<T> destinationList = new ArrayList<>();
         for (E source : sourceList) {
-            T destination = BeanUtils.instantiate(destinationClass);
-            BeanUtils.copyProperties(source, destination);
-            destinationList.add(destination);
+            destinationList.add(mapper.map(source, destinationClass));
         }
         return destinationList;
     }

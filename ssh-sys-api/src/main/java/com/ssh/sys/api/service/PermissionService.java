@@ -1,6 +1,6 @@
 package com.ssh.sys.api.service;
 
-import com.ssh.common.dto.MapDTO;
+import com.ssh.common.dto.ModelMapDTO;
 import com.ssh.common.service.BaseService;
 import com.ssh.sys.api.dto.PermissionDTO;
 import com.ssh.sys.api.dto.extension.PermissionExtDTO;
@@ -15,6 +15,6 @@ public interface PermissionService extends BaseService<PermissionDTO> {
 
     PermissionExtDTO getById(@NotNull Long id);
 
-    List<Map> getList(MapDTO mapDTO);
+    List<Map> getList(ModelMapDTO modelMapDTO);
 
 }

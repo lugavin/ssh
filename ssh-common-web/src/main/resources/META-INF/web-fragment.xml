@@ -17,27 +17,39 @@
         <param-value>classpath:app.properties</param-value>
     </context-param>
 
-    <listener>
-        <listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
-    </listener>
-
-    <listener>
-        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
-    </listener>
-
-    <!-- 配置Spring的监听器用于初始化ApplicationContext容器(默认配置文件为:/WEB-INF/applicationContext.xml) -->
+    <!-- 配置Spring的监听器用于初始化ApplicationContext容器(默认配置文件路径为:/WEB-INF/applicationContext.xml) -->
     <!--
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     -->
+
     <listener>
         <listener-class>com.ssh.common.web.servlet.listener.AppContextLoaderListener</listener-class>
     </listener>
 
+    <!-- 解决延迟加载异常问题 -->
+    <!--
+    <filter>
+        <filter-name>openEntityManagerInViewFilter</filter-name>
+        <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
+        <init-param>
+            <param-name>entityManagerFactoryBeanName</param-name>
+            <param-value>entityManagerFactory</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>openEntityManagerInViewFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    -->
+
     <!-- Shiro(权限控制) -->
     <filter>
-        <!-- The filter-name matches name of a 'shiroFilter' bean inside applicationContext.xml -->
+        <!--
+        The filter-name matches name of a 'shiroFilter' bean inside applicationContext.xml
+        See <a>http://shiro.apache.org/spring.html</a> for more details.
+        -->
         <filter-name>shiroFilter</filter-name>
         <!-- DelegatingFilterProxy通过代理将Filter和Spring容器中的bean关联起来 -->
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -46,13 +58,11 @@
             <!-- 由Servlet容器来控制Filter的生命周期 -->
             <param-value>true</param-value>
         </init-param>
-        <!-- 配置与Spring容器对应的Filter的bean -->
-        <!--
         <init-param>
             <param-name>targetBeanName</param-name>
+            <!-- 配置与Spring容器对应的Filter的bean -->
             <param-value>shiroFilter</param-value>
         </init-param>
-        -->
     </filter>
     <filter-mapping>
         <filter-name>shiroFilter</filter-name>
@@ -83,7 +93,7 @@
             <param-name>decoratorMappings</param-name>
             <param-value>
                 /*=/decorators/default.jsp
-                /admin/*=/decorators/admin-decorator.jsp
+                /admin/*=/decorators/admin-decorator.html
             </param-value>
         </init-param>
         <init-param>
@@ -96,155 +106,39 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <!-- 配置Struts2核心过滤器(参看org.apache.struts2.dispatcher.Dispatcher.init()方法) -->
     <filter>
-        <filter-name>encodingFilter</filter-name>
-        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-        <init-param>
-            <param-name>encoding</param-name>
-            <param-value>UTF-8</param-value>
-        </init-param>
+        <filter-name>struts2</filter-name>
+        <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>encodingFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
-    <!-- 配置SpringMVC核心控制器(默认配置文件为:/WEB-INF/<servlet-name>-servlet.xml) -->
-    <servlet>
-        <servlet-name>spring</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <!--
-        <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>/WEB-INF/spring-servlet.xml</param-value>
-        </init-param>
-        -->
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>spring</servlet-name>
-        <url-pattern>/</url-pattern>
-        <!--<url-pattern>*.htm</url-pattern>-->
-    </servlet-mapping>
-
-    <!-- Druid(配置Druid监控信息显示页面) -->
-    <servlet>
-        <servlet-name>druidStatView</servlet-name>
-        <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
-        <!-- 允许清空统计数据 -->
-        <init-param>
-            <param-name>resetEnable</param-name>
-            <param-value>true</param-value>
-        </init-param>
-        <init-param>
-            <param-name>loginUsername</param-name>
-            <param-value>druid</param-value>
-        </init-param>
-        <init-param>
-            <param-name>loginPassword</param-name>
-            <param-value>druid</param-value>
-        </init-param>
-        <!--
-        <init-param>
-            <param-name>allow</param-name>
-            <param-value>128.242.127.1/24,128.242.128.1</param-value>
-        </init-param>
-        <init-param>
-            <param-name>deny</param-name>
-            <param-value>128.242.127.4</param-value>
-        </init-param>
-        -->
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>druidStatView</servlet-name>
-        <url-pattern>/druid/*</url-pattern>
-    </servlet-mapping>
-
-    <!-- Druid(Web关联监控配置) -->
-    <filter>
-        <filter-name>druidWebStatFilter</filter-name>
-        <filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
-        <init-param>
-            <param-name>exclusions</param-name>
-            <param-value>/assets/*,/druid/*</param-value>
-        </init-param>
-        <init-param>
-            <param-name>sessionStatEnable</param-name>
-            <param-value>true</param-value>
-        </init-param>
-        <init-param>
-            <param-name>principalSessionName</param-name>
-            <param-value>activeUser</param-value>
-        </init-param>
-        <init-param>
-            <param-name>profileEnable</param-name>
-            <param-value>true</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>druidWebStatFilter</filter-name>
+        <filter-name>struts2</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
     <!--
-    <mime-mapping>
-        <extension>ttf</extension>
-        <mime-type>application/font-sfnt</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>woff</extension>
-        <mime-type>application/font-woff</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>woff2</extension>
-        <mime-type>application/font-woff2</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>eot</extension>
-        <mime-type>application/vnd.ms-fontobject</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>eot?#iefix</extension>
-        <mime-type>application/vnd.ms-fontobject</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>svg</extension>
-        <mime-type>image/svg+xml</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>svg#latobold</extension>
-        <mime-type>image/svg+xml</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>svg#latoblack</extension>
-        <mime-type>image/svg+xml</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>svg#latolight</extension>
-        <mime-type>image/svg+xml</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>svg#latoregular</extension>
-        <mime-type>image/svg+xml</mime-type>
-    </mime-mapping>
-    <mime-mapping>
-        <extension>svg#fontawesomeregular</extension>
-        <mime-type>image/svg+xml</mime-type>
-    </mime-mapping>
-    -->
+    <servlet>
+        <servlet-name>errorHandler</servlet-name>
+        <servlet-class>com.ssh.common.web.servlet.ErrorHandler</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>errorHandler</servlet-name>
+        <url-pattern>/errorHandler</url-pattern>
+    </servlet-mapping>
 
     <error-page>
         <error-code>404</error-code>
-        <location>/error/404.jsp</location>
+        <location>/error/404.html</location>
     </error-page>
+
     <error-page>
         <exception-type>java.lang.Throwable</exception-type>
-        <location>/error/error.jsp</location>
+        <location>/errorHandler</location>
     </error-page>
+    -->
 
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
 </web-fragment>
-
-

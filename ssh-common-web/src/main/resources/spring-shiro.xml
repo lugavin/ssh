@@ -1,36 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd">
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!--配置与web.xml中对应的Filter的bean-->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <property name="loginUrl" value="/security/login"/>
-        <!--认证成功统一跳转到首页(建议不配置, 由Shiro自动跳转到上一个请求路径)-->
+        <!--认证成功统一跳转到index.jsp(建议不配置, 由Shiro自动跳转到上一个请求路径)-->
         <property name="successUrl" value="/"/>
+        <!--
+            注意：当配置了Shiro权限注解后, 下面的配置将不起作用, 即当用户访问没有被授权的资源时将不会跳转到指定的路径
+            而是在页面显示org.apache.shiro.authz.UnauthorizedException异常信息.
+            解决方案：在struts.xml配置文件中添加以下配置来拦截Shiro异常信息以实现跳转.
+            <global-results>
+                <result name="unauthorizedException">/error/authzRefuse.jsp</result>
+            </global-results>
+            <global-exception-mappings>
+                <exception-mapping result="unauthorizedException" exception="org.apache.shiro.authz.UnauthorizedException"/>
+            </global-exception-mappings>
+        -->
         <property name="unauthorizedUrl" value="/error/authzRefuse.jsp"/>
         <property name="filters">
             <map>
                 <entry key="authc" value-ref="simpleFormAuthenticationFilter"/>
             </map>
         </property>
+        <property name="filterChainDefinitionMap">
+            <map>
+                <!--静态资源的匿名访问-->
+                <entry key="/favicon.ico" value="anon"/>
+                <entry key="/assets/**" value="anon"/>
+                <entry key="/captcha/**" value="anon"/>
+                <entry key="/error/**" value="anon"/>
+                <!--/security/logout对应的Java类可以不存在-->
+                <entry key="/security/logout" value="logout"/>
+                <!--配置记住我或认证通过可以访问的地址-->
+                <entry key="/portal/**" value="user"/>
+                <entry key="/**" value="authc"/>
+            </map>
+        </property>
+        <!--
         <property name="filterChainDefinitions">
             <value>
-                <!--静态资源的匿名访问-->
                 /favicon.ico=anon
                 /assets/**=anon
                 /captcha/**=anon
-                /favicon.ico=anon
                 /error/**=anon
-                <!--/security/logout对应的Java类可以不存在-->
                 /security/logout=logout
-                <!--配置记住我或认证通过可以访问的地址-->
                 /portal/**=user
                 /**=authc
             </value>
         </property>
+        -->
     </bean>
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
@@ -61,8 +87,7 @@
     </bean>
 
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-        <!-- 1800000 Millisecond = 30 Minute -->
-        <property name="globalSessionTimeout" value="1800000"/>
+        <property name="globalSessionTimeout" value="600000"/>
         <property name="deleteInvalidSessions" value="true"/>
     </bean>
 
@@ -72,7 +97,6 @@
 
     <bean id="cookie" class="org.apache.shiro.web.servlet.SimpleCookie">
         <constructor-arg value="rememberMe"/>
-        <!-- 2592000 Second = 30 Day -->
         <property name="maxAge" value="2592000"/>
     </bean>
 
@@ -80,33 +104,24 @@
         <property name="usernameParam" value="username"/>
         <property name="passwordParam" value="password"/>
         <property name="captchaParam" value="captcha"/>
-        <property name="tokenParam" value="token"/>
         <property name="rememberMeParam" value="rememberMe"/>
     </bean>
-
-    <!-- ============================== Enabling Shiro Annotations ============================== -->
 
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
     </bean>
 
     <!--
-    Spring AOP uses either JDK dynamic proxies or CGLIB to create the proxy.
-    To force the use of CGLIB proxies set the value of the proxy-target-class attribute of the <aop:config> element to true.
-    To force CGLIB proxying when using the @AspectJ autoproxy support, set the proxy-target-class attribute of the <aop:aspectj-autoproxy> element to true.
+    In both standalone and web applications, you might want to use Shiro's Annotations for security checks. For example, @RequiresRoles, @RequiresPermissions, etc.
+    This requires Shiro's Spring AOP integration to scan for the appropriate annotated classes and perform security logic as necessary.
+    See <a>http://shiro.apache.org/spring.html</a> for more details.
     -->
-    <!--<aop:config proxy-target-class="true"/>-->
-
-    <!--
-    Spring AOP的三种配置方式: (1)<aop:config/> (2)<aop:aspectj-autoproxy/> (3)DefaultAdvisorAutoProxyCreator
-    注意: 推荐使用前两种方式, Shiro和SpringMVC整合需要在SpringMVC配置文件中添加<aop:config/>配置才能使Shiro权限注解有效.
-    -->
-    <!--
-    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
-          depends-on="lifecycleBeanPostProcessor">
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
         <property name="proxyTargetClass" value="true"/>
     </bean>
+
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
-    -->
+
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
 
 </beans>

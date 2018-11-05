@@ -1,6 +1,6 @@
 package com.ssh.sys.api.service;
 
-import com.ssh.common.dto.MapDTO;
+import com.ssh.common.dto.ModelMapDTO;
 import com.ssh.common.page.Page;
 
 import java.util.List;
@@ -12,8 +12,8 @@ public interface AuditService {
 
     List<Map> getDetailList(Long auditLogId);
 
-    List<Map> getList(MapDTO mapDTO);
+    List<Map> getList(ModelMapDTO modelMapDTO);
 
-    Page<Map> getPage(MapDTO mapDTO, int offset, int limit);
+    Page<Map> getPage(ModelMapDTO modelMapDTO, int offset, int limit);
 
 }

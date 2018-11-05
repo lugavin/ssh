@@ -4,7 +4,7 @@ import com.ssh.common.core.annotation.Param;
 import com.ssh.common.core.annotation.Query;
 import com.ssh.common.core.annotation.RepositoryBean;
 import com.ssh.common.core.repository.CrudRepository;
-import com.ssh.common.dto.MapDTO;
+import com.ssh.common.dto.ModelMapDTO;
 import com.ssh.common.subject.Permission;
 import com.ssh.sys.api.dto.extension.PermissionExtDTO;
 import com.ssh.sys.core.entity.PermissionEntity;
@@ -19,7 +19,7 @@ public interface PermissionRepository extends CrudRepository<PermissionEntity, L
     PermissionExtDTO getPermissionById(@Param("permissionId") Long permissionId);
 
     @Query(transformer = Map.class)
-    List<Map> getListSelective(MapDTO mapDTO);
+    List<Map> getListSelective(ModelMapDTO modelMapDTO);
 
     @Query(transformer = Permission.class)
     List<Permission> getMenuListByUserId(@Param("userId") Long userId);

@@ -39,6 +39,10 @@
 
     </dependencies>
 
+    <build>
+        <finalName>sys-service-provider</finalName>
+    </build>
+
     <profiles>
         <profile>
             <id>package-archive</id>
@@ -48,7 +52,7 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-assembly-plugin</artifactId>
                         <configuration>
-                            <descriptor>${basedir}/src/main/assembly/assembly.xml</descriptor>
+                            <descriptor>src/main/assembly/assembly.xml</descriptor>
                         </configuration>
                         <executions>
                             <execution>

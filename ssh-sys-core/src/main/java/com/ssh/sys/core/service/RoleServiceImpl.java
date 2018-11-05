@@ -1,6 +1,6 @@
 package com.ssh.sys.core.service;
 
-import com.ssh.common.dto.MapDTO;
+import com.ssh.common.dto.ModelMapDTO;
 import com.ssh.common.exception.BusinessException;
 import com.ssh.common.util.BeanMapper;
 import com.ssh.sys.api.dto.RoleDTO;
@@ -14,11 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Transactional
 @Service(RoleService.BEAN_NAME)
@@ -104,8 +100,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Map> getList(MapDTO mapDTO) {
-        return roleRepository.getRoleListSelective(mapDTO);
+    public List<Map> getList(ModelMapDTO modelMapDTO) {
+        return roleRepository.getRoleListSelective(modelMapDTO);
     }
 
     @Override

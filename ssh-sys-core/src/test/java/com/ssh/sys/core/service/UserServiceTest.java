@@ -1,6 +1,6 @@
 package com.ssh.sys.core.service;
 
-import com.ssh.common.dto.MapDTO;
+import com.ssh.common.dto.ModelMapDTO;
 import com.ssh.common.util.Constant;
 import com.ssh.sys.api.dto.UserDTO;
 import com.ssh.sys.api.service.UserService;
@@ -64,7 +64,7 @@ public class UserServiceTest {
 
     @Test
     public void test2GetList() throws Exception {
-        List<Map> list = userService.getList(new MapDTO());
+        List<Map> list = userService.getList(new ModelMapDTO());
         LOGGER.info("=== {} ===", list);
     }
 

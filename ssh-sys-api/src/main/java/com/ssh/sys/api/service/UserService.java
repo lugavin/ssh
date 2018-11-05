@@ -1,6 +1,6 @@
 package com.ssh.sys.api.service;
 
-import com.ssh.common.dto.MapDTO;
+import com.ssh.common.dto.ModelMapDTO;
 import com.ssh.common.page.Page;
 import com.ssh.common.service.BaseService;
 import com.ssh.sys.api.dto.UserDTO;
@@ -17,9 +17,9 @@ public interface UserService extends BaseService<UserDTO> {
 
     List<UserDTO> getList(@NotNull UserDTO dto);
 
-    List<Map> getList(MapDTO mapDTO);
+    List<Map> getList(ModelMapDTO modelMapDTO);
 
-    Page<Map> getPage(MapDTO mapDTO, int offset, int limit);
+    Page<Map> getPage(ModelMapDTO modelMapDTO, int offset, int limit);
 
     UserDTO getByCode(@NotEmpty String code);
 

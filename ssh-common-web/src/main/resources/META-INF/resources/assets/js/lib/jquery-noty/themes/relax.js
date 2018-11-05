@@ -23,6 +23,8 @@ $.noty.themes.relax = {
         });
 
         this.$message.css({
+            fontSize  : '14px',
+            lineHeight: '16px',
             textAlign : 'center',
             padding   : '10px',
             width     : 'auto',
@@ -80,7 +82,7 @@ $.noty.themes.relax = {
                     border   : '1px solid #eee',
                     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)"
                 });
-                this.$message.css({textAlign: 'center'});
+                this.$message.css({fontSize: '13px', textAlign: 'center'});
                 break;
             case 'topLeft':
             case 'topRight':
@@ -92,7 +94,7 @@ $.noty.themes.relax = {
                     border   : '1px solid #eee',
                     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)"
                 });
-                this.$message.css({textAlign: 'left'});
+                this.$message.css({fontSize: '13px', textAlign: 'left'});
                 break;
             case 'bottom':
                 this.$bar.css({

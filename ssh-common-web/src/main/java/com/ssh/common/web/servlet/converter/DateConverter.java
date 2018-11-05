@@ -1,42 +1,46 @@
 package com.ssh.common.web.servlet.converter;
 
 import com.ssh.common.util.Constant;
-import com.ssh.common.util.PropertiesLoader;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
-import org.springframework.core.convert.converter.Converter;
+import org.apache.struts2.util.StrutsTypeConverter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Map;
 
-public class DateConverter implements Converter<String, Date> {
+public class DateConverter extends StrutsTypeConverter {
 
-    private final Set<String> patterns = new HashSet<>();
+    private static final Logger LOGGER = LoggerFactory.getLogger(DateConverter.class);
 
-    public void setPatterns(Set<String> patterns) {
-        this.patterns.addAll(patterns);
+    @Override
+    public Object convertFromString(Map context, String[] values, Class toClass) {
+        Date result = null;
+        if (toClass == Date.class) {
+            if (values != null && values.length > 0) {
+                try {
+                    String dateStr = values[0];
+                    if (!StringUtils.isEmpty(dateStr)) {
+                        result = DateUtils.parseDate(dateStr, Constant.DEFAULT_DATE_PATTERN, Constant.DEFAULT_DATETIME_PATTERN);
+                    }
+                } catch (ParseException e) {
+                    LOGGER.error("Can't to parse string to date.", e);
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return result;
     }
 
     @Override
-    public Date convert(String source) {
-        if (StringUtils.isEmpty(source)) {
-            return null;
+    public String convertToString(Map context, Object obj) {
+        if (obj instanceof Date) {
+            DateFormatUtils.format((Date) obj, Constant.DEFAULT_DATE_PATTERN);
         }
-
-        if (patterns.isEmpty()) {
-            patterns.addAll(Arrays.asList(
-                    PropertiesLoader.getValue(PropertiesLoader.Config.DATE_FORMAT, Constant.DATE_FORMAT),
-                    PropertiesLoader.getValue(PropertiesLoader.Config.DATETIME_FORMAT, Constant.DATETIME_FORMAT)
-            ));
-        }
-        try {
-            return DateUtils.parseDate(source, patterns.toArray(new String[patterns.size()]));
-        } catch (ParseException e) {
-            throw new IllegalArgumentException(e);
-        }
+        return null;
     }
 
 }

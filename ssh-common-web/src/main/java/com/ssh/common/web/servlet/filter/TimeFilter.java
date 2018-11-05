@@ -26,7 +26,9 @@ public class TimeFilter implements Filter {
         long t1 = System.currentTimeMillis();
         chain.doFilter(request, response);
         long t2 = System.currentTimeMillis();
-        LOGGER.info("Request {} completed in {} ms", ((HttpServletRequest) request).getRequestURI(), t2 - t1);
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Request {} completed in {} ms", ((HttpServletRequest) request).getRequestURI(), t2 - t1);
+        }
     }
 
     @Override

@@ -3,6 +3,8 @@ define([
     'datatables.net'
 ], function ($) {
 
+    'use strict';
+
     $.extend($.fn.dataTable.defaults, {
         paging: true,
         ordering: true,

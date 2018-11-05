@@ -1,8 +1,8 @@
 package com.ssh.common.core.repository.support;
 
+import com.ssh.common.core.repository.DynamicQueryRepository;
 import com.ssh.common.core.repository.template.StatementTemplate;
 import com.ssh.common.core.repository.template.StatementTemplateBuilder;
-import com.ssh.common.core.repository.DynamicQueryRepository;
 import com.ssh.common.dto.DTO;
 import com.ssh.common.page.Page;
 import com.ssh.common.page.PageImpl;

@@ -8,31 +8,25 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!--
-        Scans the classpath for annotated components that will be auto-registered as Spring beans.
-        By default, the Spring-provided @Component, @Repository, @Service, @Controller,
-        @RestController, @ControllerAdvice, and @Configuration stereotypes will be detected.
+        <context:annotation-config />用于激活在Spring容器中注册过的Bean上面的注解
+        (激活注解但不能注册Bean{@Autowired|@Required|@PersistenceContext})
+        <context:component-scan />除了具有<context:annotation-config />的功能以外还可以在指定package下注册JavaBean
+        (激活注解同时还能注册Bean{@Controller|@Service|@Repository|@Component})
     -->
+    <!-- 扫描和注册Bean -->
     <context:component-scan base-package="com.ssh.*.web"/>
 
-    <import resource="classpath:spring-cache.xml"/>
-
-    <bean id="captchaService" class="com.ssh.common.web.captcha.CaptchaServiceImpl">
-        <property name="cacheService" ref="cacheService"/>
-        <property name="captchaProducer" ref="captchaProducer"/>
-        <property name="charLength" value="6"/>
-        <property name="maxAge" value="300"/>
-    </bean>
-
-    <!-- 验证码 -->
-    <bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+    <bean id="kaptchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
         <property name="config">
             <bean class="com.google.code.kaptcha.util.Config">
                 <constructor-arg type="java.util.Properties">
                     <props>
+                        <prop key="kaptcha.textproducer.char.string">0123456789</prop>
+                        <prop key="kaptcha.textproducer.char.length">4</prop>
+                        <prop key="kaptcha.textproducer.char.space">3</prop>
                         <prop key="kaptcha.textproducer.font.color">red</prop>
                         <prop key="kaptcha.textproducer.font.size">34</prop>
-                        <prop key="kaptcha.word.impl">com.ssh.common.web.captcha.WordRendererExt</prop>
-                        <prop key="kaptcha.obscurificator.impl">com.ssh.common.web.captcha.DefaultRipple</prop>
+                        <prop key="kaptcha.noise.color">blue</prop>
                     </props>
                 </constructor-arg>
             </bean>

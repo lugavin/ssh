@@ -15,7 +15,9 @@
 
     <context:component-scan base-package="com.ssh.common.core"/>
 
-    <!-- <a href="https://docs.spring.io/spring-data/jpa/docs/1.6.0.RELEASE/reference/html/jpa.repositories.html">JPA</a> -->
+    <!--
+    <a href="https://docs.spring.io/spring-data/jpa/docs/1.6.0.RELEASE/reference/html/jpa.repositories.html">JPA</a>
+    -->
     <!--
     <jpa:repositories entity-manager-factory-ref="entityManagerFactory"
                       transaction-manager-ref="transactionManager"
@@ -66,15 +68,7 @@
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
-    <!-- 声明式事务管理(编程式事务管理推荐使用TransactionTemplate) -->
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
-
-    <!-- 编程式事务管理 -->
-    <!--
-    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
-        <property name="transactionManager" ref="transactionManager"/>
-    </bean>
-    -->
 
     <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
         <tx:attributes>
@@ -142,5 +136,8 @@
         <property name="basePackage" value="com.ssh.*.core.repository"/>
         <property name="annotationClass" value="com.ssh.common.core.annotation.RepositoryBean"/>
     </bean>
+
+    <!-- @AspectJ Support -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
 
 </beans>

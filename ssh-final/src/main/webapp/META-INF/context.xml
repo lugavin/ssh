@@ -6,7 +6,7 @@
               username="root"
               password="root"
               driverClassName="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://127.0.0.1:3306/ssh"
+              url="jdbc:mysql://127.0.0.1:3306/s2sh"
               maxActive="8"
               maxldle="4"/>
 </Context>

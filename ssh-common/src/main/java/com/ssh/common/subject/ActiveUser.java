@@ -81,6 +81,28 @@ public class ActiveUser implements DTO {
         this.functions = functions;
     }
 
+    public boolean isMenuPermitted(String code) {
+        for (Permission permission : menus) {
+            if (code.equals(permission.getCode())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isFunctionPermitted(String code) {
+        for (Permission permission : functions) {
+            if (code.equals(permission.getCode())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isPermitted(String code) {
+        return isMenuPermitted(code) || isFunctionPermitted(code);
+    }
+
     @Override
     public String toString() {
         return "ActiveUser [id=" + id + ", code=" + code

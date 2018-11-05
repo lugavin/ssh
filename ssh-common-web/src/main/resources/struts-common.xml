@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <!-- @see org.apache.struts2.StrutsConstants -->
+    <constant name="struts.devMode" value="true"/>
+    <constant name="struts.action.extension" value=","/>
+    <!--<constant name="struts.action.extension" value="htm"/>-->
+    <!-- 上傳文件大小最大為5M -->
+    <constant name="struts.multipart.maxSize" value="5242880"/>
+    <constant name="struts.enable.SlashesInActionNames" value="true"/>
+    <constant name="struts.mapper.alwaysSelectFullNamespace" value="false"/>
+
+    <package name="abstract-default" extends="struts-default">
+
+        <result-types>
+            <result-type name="json" class="org.apache.struts2.json.JSONResult"/>
+        </result-types>
+
+        <interceptors>
+            <interceptor name="json" class="org.apache.struts2.json.JSONInterceptor"/>
+            <interceptor name="audit" class="com.ssh.common.web.servlet.interceptor.AuditInterceptor"/>
+            <!--
+            <interceptor name="authc" class="com.ssh.common.web.servlet.interceptor.AuthcInterceptor"/>
+            <interceptor name="authz" class="com.ssh.common.web.servlet.interceptor.AuthzInterceptor"/>
+            -->
+            <interceptor-stack name="defaultStack">
+                <!--
+                <interceptor-ref name="authc"/>
+                <interceptor-ref name="authz"/>
+                -->
+                <interceptor-ref name="defaultStack"/>
+                <!-- 绑定请求的JSON数据 -->
+                <interceptor-ref name="json">
+                    <param name="enableSMD">true</param>
+                </interceptor-ref>
+                <interceptor-ref name="audit">
+                    <param name="excludeMethods">list,get*</param>
+                </interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="defaultStack"/>
+        <default-action-ref name="portal"/>
+
+        <global-results>
+            <!--
+            <result name="login">/WEB-INF/jsp/security/login.jsp</result>
+            <result name="refuse">/error/authzRefuse.jsp</result>
+            -->
+            <result name="json" type="json">
+                <param name="root">resultBean</param>
+                <param name="includeProperties">*</param>
+                <param name="excludeNullProperties">false</param>
+                <param name="defaultEncoding">UTF-8</param>
+                <param name="defaultDateFormat">yyyy-MM-dd HH:mm:ss</param>
+                <param name="contentType">application/json</param>
+            </result>
+            <result name="authenticationException">/error/authcFailure.jsp</result>
+            <result name="authorizationException">/error/authzRefuse.jsp</result>
+            <result name="exception">/error/exception.jsp</result>
+        </global-results>
+
+        <global-exception-mappings>
+            <exception-mapping result="authenticationException"
+                               exception="org.apache.shiro.authc.AuthenticationException"/>
+            <exception-mapping result="authorizationException"
+                               exception="org.apache.shiro.authz.AuthorizationException"/>
+            <exception-mapping result="exception"
+                               exception="java.lang.Exception"/>
+        </global-exception-mappings>
+
+        <action name="portal" class="portalAction">
+            <result>/WEB-INF/jsp/portal/index.jsp</result>
+        </action>
+
+        <!--
+        <action name="login" class="loginAction">
+            <result type="redirectAction">portal</result>
+        </action>
+        -->
+
+        <action name="*/*" class="{1}Action" method="{2}">
+            <result>/WEB-INF/jsp/{0}.jsp</result>
+        </action>
+
+    </package>
+
+</struts>

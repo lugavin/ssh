@@ -2,26 +2,20 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/aop
-       http://www.springframework.org/schema/aop/spring-aop.xsd">
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!--
-    <bean class="org.springframework.aop.support.DefaultPointcutAdvisor">
-        <property name="pointcut" ref="validationPointcut"/>
-        <property name="advice" ref="validationAdvice"/>
-    </bean>
-
-    <bean id="validationPointcut" class="org.springframework.aop.support.annotation.AnnotationMatchingPointcut">
-        <constructor-arg index="0" value="com.ssh.common.validation.Validated"/>
-        <constructor-arg index="1" value="true"/>
-    </bean>
-
-    <bean id="validationAdvice" class="com.ssh.common.validation.MethodValidationInterceptor">
-        <constructor-arg type="javax.validation.ValidatorFactory" ref="validator"/>
-    </bean>
+        Scans the classpath for annotated components that will be auto-registered as Spring beans.
+        By default, the Spring-provided @Component, @Repository, @Service, @Controller,
+        @RestController, @ControllerAdvice, and @Configuration stereotypes will be detected.
     -->
+    <context:component-scan base-package="com.ssh.common"/>
 
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
@@ -40,22 +34,7 @@
         </property>
     </bean>
 
-    <bean id="validationAspect" class="com.ssh.common.validation.ValidationAspect">
-        <constructor-arg ref="validator"/>
-    </bean>
-
-    <!--
-    Spring AOP uses either JDK dynamic proxies or CGLIB to create the proxy.
-    To force the use of CGLIB proxies set the value of the proxy-target-class attribute of the <aop:config> element to true.
-    To force CGLIB proxying when using the @AspectJ autoproxy support, set the proxy-target-class attribute of the <aop:aspectj-autoproxy> element to true.
-    -->
-    <aop:config proxy-target-class="true">
-        <aop:aspect ref="validationAspect" order="1">
-            <aop:before method="validate" pointcut="execution(* com.ssh.*.*.service.*Service.*(..))"/>
-        </aop:aspect>
-    </aop:config>
-
     <!-- Enables the use of the @AspectJ style of Spring AOP. -->
-    <!--<aop:aspectj-autoproxy proxy-target-class="true"/>-->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
 
 </beans>
